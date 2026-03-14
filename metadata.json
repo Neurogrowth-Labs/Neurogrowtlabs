@@ -1,0 +1,8 @@
+{
+  "name": "NeuroGrowth Labs",
+  "description": "AI-powered enterprise operating systems and intelligence infrastructure.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
