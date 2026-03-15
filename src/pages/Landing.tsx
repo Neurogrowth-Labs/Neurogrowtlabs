@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Globe, Brain, Network, Shield, Building2, Landmark, Activity, Fingerprint, ChevronRight, ArrowRight, Cpu, Zap, Factory, User, Sparkles, Database, Server, Code, Layers } from 'lucide-react';
 import NeuralNetwork from '../components/three/NeuralNetwork';
 import WorldMap3D from '../components/three/WorldMap3D';
@@ -79,6 +79,7 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -95,7 +96,12 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
     setRotateY(rotateYValue);
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
   const handleMouseLeave = () => {
+    setIsHovered(false);
     setRotateX(0);
     setRotateY(0);
   };
@@ -107,15 +113,16 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       animate={{
         rotateX,
         rotateY,
-        scale: rotateX !== 0 || rotateY !== 0 ? 1.05 : 1,
-        zIndex: rotateX !== 0 || rotateY !== 0 ? 10 : 1,
+        scale: isHovered ? 1.05 : 1,
+        zIndex: isHovered ? 10 : 1,
       }}
-      className="group relative p-8 rounded-2xl bg-glass-surface border border-glass-border hover:border-electric-blue/50 transition-all duration-300 overflow-hidden flex flex-col"
+      className="group relative p-8 rounded-2xl bg-glass-surface hover:bg-white/5 border border-glass-border hover:border-electric-blue/50 transition-all duration-300 overflow-hidden flex flex-col"
       style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
     >
       <div 
@@ -126,10 +133,10 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
       />
       <div className="absolute inset-0 bg-gradient-to-br from-violet-glow/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
-      <div className="transform-gpu transition-transform duration-300" style={{ transform: 'translateZ(30px)' }}>
-        <platform.icon className="w-10 h-10 text-electric-blue mb-6 drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]" />
-        <h3 className="text-xl font-semibold mb-3 text-white">{platform.name}</h3>
-        <p className="text-sm text-quantum-silver leading-relaxed">{platform.desc}</p>
+      <div className="transform-gpu transition-all duration-300 group-hover:scale-105" style={{ transform: 'translateZ(30px)' }}>
+        <platform.icon className="w-10 h-10 text-electric-blue group-hover:text-violet-glow transition-colors duration-300 mb-6 drop-shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:drop-shadow-[0_0_15px_rgba(123,97,255,0.8)]" />
+        <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-electric-blue transition-colors duration-300">{platform.name}</h3>
+        <p className="text-sm text-quantum-silver leading-relaxed group-hover:text-gray-200 transition-colors duration-300">{platform.desc}</p>
       </div>
       
       <div 
@@ -540,8 +547,12 @@ export default function Landing() {
                 <div className="w-2 h-2 rounded-full bg-ai-green animate-pulse shadow-[0_0_10px_rgba(0,255,102,0.8)]" />
                 <span className="text-ai-green font-mono">ALL SYSTEMS OPERATIONAL</span>
               </div>
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link to="/ai-ethics" className="hover:text-white transition-colors">AI Ethics</Link>
+              <Link to="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</Link>
+              <Link to="/dpa" className="hover:text-white transition-colors">DPA</Link>
+              <Link to="/security-policy" className="hover:text-white transition-colors">Security Policy</Link>
             </div>
           </div>
         </div>
