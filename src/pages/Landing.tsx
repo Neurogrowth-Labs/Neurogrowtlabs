@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Globe, Brain, Network, Shield, Building2, Landmark, Activity, Fingerprint, ChevronRight, ArrowRight, Cpu, Zap, Factory, User, Sparkles, Database, Server, Code, Layers } from 'lucide-react';
+import { Globe, Brain, Network, Shield, Building2, Landmark, Activity, ArrowRight, Sparkles, Server, Menu, X } from 'lucide-react';
 import NeuralNetwork from '../components/three/NeuralNetwork';
 import WorldMap3D from '../components/three/WorldMap3D';
 import RobotScene from '../components/three/RobotScene';
 import DataCenter from '../components/three/DataCenter';
+import BrandLogo from '../components/BrandLogo';
 
 const platforms = [
   { 
@@ -159,6 +160,7 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
 export default function Landing() {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Parallax transforms
   const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
@@ -168,34 +170,64 @@ export default function Landing() {
   const neuralY = useTransform(scrollY, [0, 5000], [0, 800]);
 
   return (
-    <div className="bg-midnight-black min-h-screen text-white overflow-hidden selection:bg-electric-blue selection:text-black">
+    <div className="bg-midnight-black min-h-screen text-white overflow-x-hidden selection:bg-electric-blue selection:text-black">
       <motion.div style={{ y: neuralY }} className="fixed inset-0 z-0 pointer-events-none">
         <NeuralNetwork />
       </motion.div>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-glass-border bg-midnight-black/50 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-electric-blue to-violet-glow animate-pulse-slow shadow-[0_0_15px_rgba(0,229,255,0.5)]" />
-            <span className="font-sans font-bold text-xl tracking-tight">NeuroGrowth Labs</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-20 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <BrandLogo className="h-8 sm:h-9 w-auto max-w-[180px] sm:max-w-[220px]" />
+            <span className="sr-only">NeuroGrowth Labs</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-quantum-silver">
-            <a href="#platforms" className="hover:text-electric-blue transition-colors">Platforms</a>
-            <a href="#industries" className="hover:text-electric-blue transition-colors">Industries</a>
-            <a href="#technology" className="hover:text-electric-blue transition-colors">Technology</a>
+            <a href="#platforms" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Platforms</a>
+            <a href="#industries" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Industries</a>
+            <a href="#technology" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Technology</a>
             <button 
-              onClick={() => navigate('/portal')}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                navigate('/portal');
+              }}
               className="px-4 py-1.5 text-xs rounded-full bg-glass-surface border border-electric-blue/50 text-electric-blue hover:bg-electric-blue hover:text-black hover:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all duration-300"
             >
               Access Portal
             </button>
           </div>
+          <button
+            type="button"
+            className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-glass-border bg-white/5 text-white"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            aria-expanded={isMobileMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-glass-border px-4 sm:px-6 py-4 bg-midnight-black/95">
+            <div className="flex flex-col gap-3 text-sm font-medium text-quantum-silver">
+              <a href="#platforms" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Platforms</a>
+              <a href="#industries" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Industries</a>
+              <a href="#technology" className="hover:text-electric-blue transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Technology</a>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  navigate('/portal');
+                }}
+                className="mt-2 px-4 py-3 text-sm rounded-full bg-electric-blue text-black font-semibold"
+              >
+                Access Portal
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center pt-28 sm:pt-32 lg:pt-20 overflow-hidden">
         {/* Futuristic 3D Globe & Humanoid Background */}
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
@@ -205,30 +237,30 @@ export default function Landing() {
           <RobotScene />
         </motion.div>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 mt-32">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 mt-16 sm:mt-20 lg:mt-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="flex flex-row items-center justify-between gap-8 w-full"
+            className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-12 w-full"
           >
             <div className="text-left max-w-3xl flex-1">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 leading-[1.1] drop-shadow-2xl">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 leading-[1.05] drop-shadow-2xl">
                 AI Infrastructure for <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-violet-glow">Nations and Enterprises</span>
               </h1>
-              <p className="text-base md:text-lg text-quantum-silver mb-0 leading-relaxed">
+              <p className="text-base md:text-lg text-quantum-silver mb-0 leading-relaxed max-w-2xl">
                 Advanced operating systems that power intelligent economies. NeuroGrowth Labs develops AI-powered enterprise operating systems that transform how governments and organizations operate, scale, and compete in a digital world.
               </p>
             </div>
-            <div className="flex flex-row items-center justify-end gap-3 shrink-0">
+            <div className="flex w-full lg:w-auto flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 shrink-0">
               <button 
                 onClick={() => navigate('/portal')}
-                className="px-4 py-2 text-xs bg-electric-blue text-black font-semibold rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
+                className="px-5 py-3 text-sm bg-electric-blue text-black font-semibold rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 Explore Platforms <ArrowRight className="w-3 h-3" />
               </button>
-              <button className="px-4 py-2 text-xs bg-glass-surface border border-violet-glow text-white font-semibold rounded-full hover:bg-violet-glow/20 hover:shadow-[0_0_30px_rgba(138,43,226,0.4)] transition-all duration-300 whitespace-nowrap">
+              <button className="px-5 py-3 text-sm bg-glass-surface border border-violet-glow text-white font-semibold rounded-full hover:bg-violet-glow/20 hover:shadow-[0_0_30px_rgba(138,43,226,0.4)] transition-all duration-300 whitespace-nowrap">
                 Request Partnership
               </button>
             </div>
@@ -237,8 +269,8 @@ export default function Landing() {
       </section>
 
       {/* TRUST SECTION / POWERING THE FUTURE */}
-      <section className="py-20 relative z-10 bg-midnight-black/80 backdrop-blur-md border-y border-glass-border">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      <section className="py-16 sm:py-20 relative z-10 bg-midnight-black/80 backdrop-blur-md border-y border-glass-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-electric-blue mb-6">A $4B AI Infrastructure Company</h2>
           <p className="text-lg text-quantum-silver max-w-4xl mx-auto mb-12 leading-relaxed">
             NeuroGrowth Labs is a global technology company designing next-generation AI platforms and enterprise operating systems for governments, corporations, and national-scale institutions. Our systems power intelligent decision-making, automation, and digital transformation across industries.
@@ -261,16 +293,16 @@ export default function Landing() {
       </section>
 
       {/* OUR MISSION */}
-      <section className="py-32 relative">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="py-20 sm:py-24 lg:py-32 relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Empowering Nations and Enterprises with Artificial Intelligence</h2>
-            <p className="text-xl text-quantum-silver leading-relaxed">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight">Empowering Nations and Enterprises with Artificial Intelligence</h2>
+            <p className="text-lg sm:text-xl text-quantum-silver leading-relaxed">
               Our mission is to build the intelligence layer for the modern economy. Through advanced AI systems, enterprise automation, and scalable digital infrastructure, we help organizations unlock new levels of performance, efficiency, and growth.
             </p>
           </motion.div>
@@ -278,18 +310,18 @@ export default function Landing() {
       </section>
 
       {/* PLATFORM ECOSYSTEM */}
-      <section id="platforms" className="py-32 relative bg-deep-space-blue border-y border-glass-border overflow-hidden">
+      <section id="platforms" className="py-20 sm:py-24 lg:py-32 relative bg-deep-space-blue border-y border-glass-border overflow-hidden">
         {/* Parallax Background */}
         <motion.div 
           style={{ y: platformsY }}
           className="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center"
         >
-          <Network className="w-[800px] h-[800px] text-electric-blue" />
+          <Network className="w-[420px] h-[420px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] text-electric-blue" />
         </motion.div>
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Platform Ecosystem</h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Platform Ecosystem</h2>
             <p className="text-quantum-silver max-w-2xl mx-auto text-lg">8 AI platforms. Multi-industry impact. The digital nervous system for modern organizations.</p>
           </div>
           
@@ -302,10 +334,10 @@ export default function Landing() {
       </section>
 
       {/* INDUSTRIES */}
-      <section id="industries" className="py-32 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Industry Impact</h2>
+      <section id="industries" className="py-20 sm:py-24 lg:py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Industry Impact</h2>
             <p className="text-quantum-silver max-w-2xl mx-auto text-lg">NeuroGrowth Labs technologies serve multiple industries.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -327,10 +359,10 @@ export default function Landing() {
       </section>
 
       {/* TECHNOLOGY */}
-      <section id="technology" className="py-32 relative bg-graphite-grey/30 border-y border-glass-border overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
+      <section id="technology" className="py-20 sm:py-24 lg:py-32 relative bg-graphite-grey/30 border-y border-glass-border overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-10 sm:gap-16">
           <div className="lg:w-1/2">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Technology Infrastructure</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Technology Infrastructure</h2>
             <p className="text-quantum-silver text-lg mb-8">
               Our platforms are built on a powerful AI infrastructure stack. Core layers include:
             </p>
@@ -342,16 +374,16 @@ export default function Landing() {
               ))}
             </ul>
           </div>
-          <div className="lg:w-1/2 w-full h-[400px] relative flex items-end justify-center gap-4">
+          <div className="lg:w-1/2 w-full h-[260px] sm:h-[320px] lg:h-[400px] relative flex items-end justify-center gap-4">
             <DataCenter />
           </div>
         </div>
       </section>
 
       {/* ARCHITECTURE */}
-      <section className="py-32 relative">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Product Ecosystem Architecture</h2>
+      <section className="py-20 sm:py-24 lg:py-32 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Product Ecosystem Architecture</h2>
           <p className="text-quantum-silver max-w-2xl mx-auto text-lg mb-16">We are building the digital infrastructure layer of modern economies.</p>
           
           <div className="flex flex-col items-center justify-center space-y-8 font-mono text-sm relative group">
@@ -367,7 +399,7 @@ export default function Landing() {
 
             <motion.div 
               whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(0, 229, 255, 0.4)", y: -5 }}
-              className="relative z-10 px-12 py-6 border border-electric-blue bg-electric-blue/10 rounded-xl text-electric-blue font-bold tracking-widest uppercase cursor-pointer transition-all duration-300"
+              className="relative z-10 px-6 sm:px-12 py-4 sm:py-6 border border-electric-blue bg-electric-blue/10 rounded-xl text-electric-blue font-bold tracking-widest uppercase cursor-pointer transition-all duration-300 text-sm sm:text-base"
             >
               NeuroGrowth AI Core
             </motion.div>
@@ -383,7 +415,7 @@ export default function Landing() {
                 <motion.div 
                   key={layer.id}
                   whileHover={{ y: -10, boxShadow: "0 0 30px rgba(138, 43, 226, 0.3)" }}
-                  className="flex-1 p-6 border border-glass-border bg-glass-surface text-gray-300 rounded-xl cursor-pointer transition-all duration-300 text-center hover:border-violet-glow hover:text-white"
+                  className="flex-1 p-5 sm:p-6 border border-glass-border bg-glass-surface text-gray-300 rounded-xl cursor-pointer transition-all duration-300 text-center hover:border-violet-glow hover:text-white"
                 >
                   {layer.name}
                 </motion.div>
@@ -394,7 +426,7 @@ export default function Landing() {
             
             <motion.div 
               whileHover={{ y: -5, boxShadow: "0 0 40px rgba(255, 255, 255, 0.1)" }}
-              className="w-full max-w-4xl p-8 border border-glass-border bg-glass-surface rounded-2xl relative z-10 transition-all duration-300 cursor-pointer text-center hover:border-white/30"
+              className="w-full max-w-4xl p-5 sm:p-8 border border-glass-border bg-glass-surface rounded-2xl relative z-10 transition-all duration-300 cursor-pointer text-center hover:border-white/30"
             >
               <h3 className="mb-6 uppercase tracking-widest text-white">Platform Ecosystem</h3>
               <div className="flex flex-wrap justify-center gap-4">
@@ -413,15 +445,15 @@ export default function Landing() {
       </section>
 
       {/* LEADERSHIP */}
-      <section className="py-32 relative bg-deep-space-blue border-y border-glass-border">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold mb-16 tracking-tight text-center">Leadership</h2>
+      <section className="py-20 sm:py-24 lg:py-32 relative bg-deep-space-blue border-y border-glass-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl md:text-5xl font-bold mb-12 sm:mb-16 tracking-tight text-center">Leadership</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {leaders.map((leader, i) => (
               <motion.div
                 key={leader.name}
                 whileHover={{ y: -10 }}
-                className="p-8 rounded-2xl bg-glass-surface border border-glass-border backdrop-blur-xl relative overflow-hidden group"
+                className="p-6 sm:p-8 rounded-2xl bg-glass-surface border border-glass-border backdrop-blur-xl relative overflow-hidden group"
               >
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-electric-blue to-violet-glow opacity-0 group-hover:opacity-100 transition-opacity" />
                 <h3 className="text-2xl font-bold mb-2 text-white">{leader.name}</h3>
@@ -434,16 +466,16 @@ export default function Landing() {
       </section>
 
       {/* GLOBAL VISION & CALL TO ACTION */}
-      <section className="py-40 relative overflow-hidden">
+      <section className="py-24 sm:py-32 lg:py-40 relative overflow-hidden">
         {/* Massive Glowing Neural Brain Background */}
         <motion.div 
           style={{ y: globalVisionY }}
           className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none"
         >
-          <Brain className="w-[800px] h-[800px] text-electric-blue animate-pulse-slow" />
+          <Brain className="w-[360px] h-[360px] sm:w-[520px] sm:h-[520px] lg:w-[800px] lg:h-[800px] text-electric-blue animate-pulse-slow" />
         </motion.div>
         
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -451,24 +483,24 @@ export default function Landing() {
             transition={{ duration: 0.8 }}
           >
             <h3 className="text-2xl text-electric-blue font-mono mb-6 uppercase tracking-widest">Global Vision</h3>
-            <p className="text-xl text-quantum-silver mb-12 leading-relaxed">
+            <p className="text-lg sm:text-xl text-quantum-silver mb-10 sm:mb-12 leading-relaxed">
               The next generation of economic growth will be powered by intelligent digital systems. NeuroGrowth Labs is building the technology platforms that will power that future.
             </p>
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 drop-shadow-2xl">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter mb-8 drop-shadow-2xl">
               Build the Future with <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-violet-glow">NeuroGrowth Labs</span>
             </h2>
             <p className="text-lg text-quantum-silver mb-12">
               Partner with us to create intelligent systems that transform industries, governments, and economies.
             </p>
-            <div className="flex flex-row items-center justify-center gap-3 mt-12">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-10 sm:mt-12">
               <button 
                 onClick={() => navigate('/portal')}
-                className="px-4 py-2 text-xs bg-electric-blue text-black font-semibold rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.8)] transition-all duration-300 whitespace-nowrap"
+                className="px-5 py-3 text-sm bg-electric-blue text-black font-semibold rounded-full hover:bg-white hover:shadow-[0_0_30px_rgba(0,229,255,0.8)] transition-all duration-300 whitespace-nowrap"
               >
                 Request Partnership
               </button>
-              <button className="px-4 py-2 text-xs bg-glass-surface border border-violet-glow text-white font-semibold rounded-full hover:bg-violet-glow/20 hover:shadow-[0_0_30px_rgba(138,43,226,0.6)] transition-all duration-300 whitespace-nowrap">
+              <button className="px-5 py-3 text-sm bg-glass-surface border border-violet-glow text-white font-semibold rounded-full hover:bg-violet-glow/20 hover:shadow-[0_0_30px_rgba(138,43,226,0.6)] transition-all duration-300 whitespace-nowrap">
                 Explore Platforms
               </button>
             </div>
@@ -477,7 +509,7 @@ export default function Landing() {
       </section>
 
       {/* FOOTER */}
-      <footer className="relative border-t border-glass-border pt-20 pb-10 bg-midnight-black overflow-hidden">
+      <footer className="relative border-t border-glass-border pt-16 sm:pt-20 pb-10 bg-midnight-black overflow-hidden">
         {/* Glowing Neural Network Animation in Footer */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <svg className="w-full h-full" viewBox="0 0 1000 200" preserveAspectRatio="none">
@@ -487,12 +519,12 @@ export default function Landing() {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
-            <div className="col-span-2 lg:col-span-1">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 mb-12 sm:mb-16">
+            <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-electric-blue to-violet-glow shadow-[0_0_10px_rgba(0,229,255,0.5)]" />
-                <span className="font-sans font-bold text-lg tracking-tight text-white">NeuroGrowth Labs</span>
+                <BrandLogo className="h-7 w-auto max-w-[180px]" />
+                <span className="sr-only">NeuroGrowth Labs</span>
               </div>
               <p className="text-quantum-silver text-sm mb-6">AI Infrastructure for the Next Global Economy</p>
             </div>
@@ -538,11 +570,11 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-glass-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-quantum-silver">
-            <div>
+          <div className="pt-8 border-t border-glass-border flex flex-col lg:flex-row justify-between items-center lg:items-start gap-4 text-xs text-quantum-silver">
+            <div className="text-center lg:text-left">
               © 2045 NeuroGrowth Labs. All rights reserved.
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-6">
+            <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-4 gap-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-ai-green animate-pulse shadow-[0_0_10px_rgba(0,255,102,0.8)]" />
                 <span className="text-ai-green font-mono">ALL SYSTEMS OPERATIONAL</span>
