@@ -2,8 +2,8 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronRight, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { MagneticButton } from '../ui/MagneticButton';
 import WorldMap3D from '../three/WorldMap3D';
-import RobotScene from '../three/RobotScene';
 
 export default function HeroSection() {
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ export default function HeroSection() {
         className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
       >
         <WorldMap3D />
-        <RobotScene />
       </motion.div>
 
       {/* Main Content */}
@@ -45,25 +44,40 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 shrink-0 w-full">
-            <button 
-              onClick={() => document.getElementById('platforms')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full sm:w-auto px-8 py-3.5 text-sm bg-white text-midnight-black font-semibold rounded-full hover:bg-electric-blue hover:text-white hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] transition-all duration-300 flex items-center justify-center gap-2 flex-nowrap shrink-0"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 shrink-0 w-full relative z-20">
+            <MagneticButton 
+              onClick={() => {
+                navigate('/platforms');
+                window.scrollTo(0, 0);
+              }}
+              className="relative group w-full sm:w-auto overflow-hidden rounded-full p-[1px] transform-gpu"
             >
-              Explore Ecosystem <ArrowRight className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={() => navigate('/portal')}
-              className="w-full sm:w-auto px-8 py-3.5 text-sm bg-glass-surface border border-glass-border text-white font-medium rounded-full hover:bg-white/10 hover:border-electric-blue/50 transition-all duration-300 flex items-center justify-center gap-2 flex-nowrap shrink-0"
+              {/* Animated gradient border */}
+              <span className="absolute inset-0 bg-gradient-to-r from-ai-cyan via-violet-glow to-electric-blue opacity-70 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full" />
+              {/* Glassmorphism Surface */}
+              <div className="relative flex items-center justify-center gap-2 px-8 py-4 bg-midnight-black/40 backdrop-blur-xl rounded-full border border-white/10 group-hover:bg-midnight-black/60 transition-all duration-300">
+                <span className="relative z-10 text-white font-medium tracking-wide">Explore Our Platforms</span>
+                <ArrowRight className="relative z-10 w-4 h-4 text-ai-cyan group-hover:translate-x-1 transition-transform duration-300" />
+                {/* Subtle glow / Light sweeping effect */}
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none rounded-full" />
+              </div>
+            </MagneticButton>
+
+            <MagneticButton 
+              onClick={() => {
+                navigate('/partner');
+                window.scrollTo(0, 0);
+              }}
+              className="relative group w-full sm:w-auto overflow-hidden rounded-full p-[1px] transform-gpu"
             >
-              Book Consultation <ChevronRight className="w-4 h-4" />
-            </button>
-            <button 
-               onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-               className="w-full sm:w-auto px-8 py-3.5 text-sm bg-transparent text-quantum-silver font-medium rounded-full hover:text-white transition-all duration-300 flex items-center justify-center flex-nowrap shrink-0"
-            >
-              Launch Products
-            </button>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-white/5 rounded-full group-hover:opacity-100 opacity-50 transition-opacity duration-300 pointer-events-none" />
+              <div className="relative flex items-center justify-center gap-2 px-8 py-4 bg-glass-surface backdrop-blur-lg rounded-full border border-glass-border group-hover:bg-white/10 transition-all duration-300">
+                <span className="relative z-10 text-white font-medium tracking-wide">Partner With Us</span>
+                <ChevronRight className="relative z-10 w-4 h-4 text-quantum-silver group-hover:text-white transition-colors duration-300" />
+                {/* Future border lighting */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)_inset]" />
+              </div>
+            </MagneticButton>
           </div>
         </motion.div>
       </div>

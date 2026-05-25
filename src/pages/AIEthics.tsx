@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/sections/Footer';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 
@@ -77,12 +78,7 @@ export default function AIEthics() {
         </motion.div>
       </main>
       
-      {/* Footer */}
-      <footer className="py-8 border-t border-glass-border bg-graphite-grey">
-        <div className="max-w-7xl mx-auto px-6 text-center text-quantum-silver text-sm">
-          <p>&copy; {new Date().getFullYear()} Neurogrowth Labs. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

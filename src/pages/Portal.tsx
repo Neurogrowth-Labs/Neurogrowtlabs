@@ -5,6 +5,7 @@ import { LogOut, Image as ImageIcon, Search, MapPin, Loader2, Upload, Brain } fr
 import { GoogleGenAI } from '@google/genai';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
+import Footer from '../components/sections/Footer';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -317,6 +318,7 @@ export default function Portal() {
 
           </div>
         </main>
+        <Footer />
       </div>
     </div>
   );

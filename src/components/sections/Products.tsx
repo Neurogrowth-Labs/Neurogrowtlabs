@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Brain, Network, Shield, Building2, Landmark, Activity, Sparkles, Layers } from 'lucide-react';
+import { Globe, Brain, Network, Shield, Building2, Landmark, Activity, Sparkles, Layers, HeartPulse, Store, LineChart, LifeBuoy } from 'lucide-react';
 
 const platforms = [
   { 
@@ -16,40 +16,40 @@ const platforms = [
     capabilities: ['Trade data intelligence', 'Customs optimization', 'Digital supply chain orchestration', 'Trade finance integration']
   },
   { 
-    name: 'AfriProperty', 
+    name: 'AfriEstate', 
     desc: 'An AI-powered real estate and land intelligence platform for governments, developers, and investors.', 
     icon: Building2,
     capabilities: ['Property data infrastructure', 'Digital land registry systems', 'Asset intelligence', 'Real estate analytics']
   },
   { 
-    name: 'AgriShield AI', 
-    desc: 'A smart agricultural intelligence system that protects food ecosystems and increases productivity.', 
-    icon: Shield,
-    capabilities: ['Crop monitoring AI', 'Predictive yield analytics', 'Agricultural risk management', 'Food security intelligence']
+    name: 'Health AI', 
+    desc: 'Health AI connects you with expert doctors instantly. Book appointments, ask our AI assistant, and get virtual consultations — all from one dashboard.', 
+    icon: HeartPulse,
+    capabilities: ['Virtual consultations', 'AI health assistant', 'Appointment booking', 'Medical records dashboard']
   },
   { 
-    name: 'Lunova', 
-    desc: 'An AI-powered luxury ecommerce platform redefining high fashion jewelry sales through intelligent personalization and discovery.', 
-    icon: Sparkles,
-    capabilities: ['AI-driven jewelry discovery', 'Luxury ecommerce engine', 'Personalized style intelligence', 'High fashion trend analytics']
+    name: 'IBOS', 
+    desc: 'Informal Business Operating System providing a complete point-of-sale and business management platform for informal sectors.', 
+    icon: Store,
+    capabilities: ['Point-of-sale system', 'Inventory management', 'Sales analytics', 'Informal business CRM']
   },
   { 
     name: 'RescueBot AI', 
     desc: 'An advanced AI system designed to support emergency response and disaster management.', 
-    icon: Activity,
+    icon: LifeBuoy,
     capabilities: ['Emergency intelligence', 'Rescue coordination AI', 'Crisis monitoring systems', 'Public safety analytics']
   },
   { 
-    name: 'IPO OS', 
-    desc: 'An intelligent capital markets platform helping companies prepare for and navigate public offerings.', 
-    icon: Landmark,
-    capabilities: ['IPO readiness analytics', 'Financial intelligence systems', 'Compliance automation', 'Investor reporting tools', 'Private investment access']
+    name: 'NGX AfriQuant', 
+    desc: 'An intelligent financial markets platform that bridges the gap between data and strategy, providing predictive insights and quantitative analytics.', 
+    icon: LineChart,
+    capabilities: ['Quantitative trading algorithms', 'Market trend prediction', 'Algorithmic risk management', 'Asset modeling']
   },
   { 
-    name: 'Cogni Sacra', 
-    desc: 'The most powerful AI education infrastructure — connecting students with private training while enabling academic institutions to scale.', 
-    icon: Brain,
-    capabilities: ['AI-powered student-tutor matching', 'Institutional global expansion engine', 'Zero-cost digital campus infrastructure', 'World-class online education delivery']
+    name: 'CG Waste Data', 
+    desc: 'Intelligent Construction & Demolition Waste Management for a Circular Built Environment, transforming how the construction, demolition, and waste recovery sectors manage material flows, compliance, and circular economy outcomes.', 
+    icon: Building2,
+    capabilities: ['Material flow tracking', 'Compliance automation', 'Circular economy analytics', 'Waste recovery optimization']
   }
 ];
 

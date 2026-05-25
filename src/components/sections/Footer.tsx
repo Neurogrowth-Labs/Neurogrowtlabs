@@ -32,22 +32,25 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide">Ecosystem</h4>
             <ul className="space-y-4">
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">AfriTranslate Studio</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">AfriTrade OS</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Cogni Sacra</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Lunova</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">IPO OS</a></li>
+              <li><a href="https://studio.afritranslate.co.za" target="_blank" rel="noopener noreferrer" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">AfriTranslate Studio</a></li>
+              <li><a href="https://afritradeos.co.za" target="_blank" rel="noopener noreferrer" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">AfriTrade OS</a></li>
+              <li><a href="https://afriestate.co.za" target="_blank" rel="noopener noreferrer" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">AfriEstate</a></li>
+              <li><a href="https://cgwastedata.co.za" target="_blank" rel="noopener noreferrer" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">CG Waste Data</a></li>
+              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">RescueBot AI</a></li>
+              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">IBOS</a></li>
+              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">NGX AfriQuant</a></li>
+              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Health AI</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide">Company</h4>
             <ul className="space-y-4">
-              <li><a href="#about" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">About</a></li>
+              <li><Link to="/about" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>About</Link></li>
               <li><a href="#services" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Services</a></li>
               <li><a href="#infrastructure" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Infrastructure</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Careers</a></li>
-              <li><a href="#" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Contact</a></li>
+              <li><Link to="/careers" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>Careers</Link></li>
+              <li><Link to="/contact" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>Contact</Link></li>
             </ul>
           </div>
 

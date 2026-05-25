@@ -20,6 +20,7 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-float-fast: float 3s ease-in-out infinite;
   --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 1.5s infinite;
 }
 
 @keyframes float {
@@ -31,6 +32,11 @@
 @keyframes glow {
   0% { box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
   100% { box-shadow: 0 0 30px rgba(0, 229, 255, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 body {

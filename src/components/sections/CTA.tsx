@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { MagneticButton } from '../ui/MagneticButton';
 
 export default function CTASection() {
   const navigate = useNavigate();
@@ -29,19 +30,36 @@ export default function CTASection() {
             Deploy sovereign AI, intelligent infrastructure, and world-class enterprise systems today.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
-              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-white text-midnight-black font-semibold rounded-full hover:bg-electric-blue hover:text-white hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] transition-all duration-300 flex items-center justify-center gap-2"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-20">
+            <MagneticButton 
+              onClick={() => {
+                navigate('/platforms');
+                window.scrollTo(0, 0);
+              }}
+              className="relative group w-full sm:w-auto overflow-hidden rounded-full p-[1px] transform-gpu"
             >
-              Explore Our Platforms <ArrowRight className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={() => navigate('/portal')}
-              className="px-8 py-4 bg-transparent border border-glass-border text-white font-medium rounded-full hover:bg-white/5 transition-all duration-300 flex items-center justify-center"
+              <span className="absolute inset-0 bg-gradient-to-r from-ai-cyan via-violet-glow to-electric-blue opacity-70 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full" />
+              <div className="relative flex items-center justify-center gap-2 px-8 py-4 bg-midnight-black/40 backdrop-blur-xl rounded-full border border-white/10 group-hover:bg-midnight-black/60 transition-all duration-300">
+                <span className="relative z-10 text-white font-medium tracking-wide">Explore Our Platforms</span>
+                <ArrowRight className="relative z-10 w-4 h-4 text-ai-cyan group-hover:translate-x-1 transition-transform duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none rounded-full" />
+              </div>
+            </MagneticButton>
+
+            <MagneticButton 
+              onClick={() => {
+                navigate('/partner');
+                window.scrollTo(0, 0);
+              }}
+              className="relative group w-full sm:w-auto overflow-hidden rounded-full p-[1px] transform-gpu"
             >
-              Partner With Us
-            </button>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-white/5 rounded-full group-hover:opacity-100 opacity-50 transition-opacity duration-300 pointer-events-none" />
+              <div className="relative flex items-center justify-center gap-2 px-8 py-4 bg-glass-surface backdrop-blur-lg rounded-full border border-glass-border group-hover:bg-white/10 transition-all duration-300">
+                <span className="relative z-10 text-white font-medium tracking-wide">Partner With Us</span>
+                <ChevronRight className="relative z-10 w-4 h-4 text-quantum-silver group-hover:text-white transition-colors duration-300" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)_inset]" />
+              </div>
+            </MagneticButton>
           </div>
         </motion.div>
       </div>

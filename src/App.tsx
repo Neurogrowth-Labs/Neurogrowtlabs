@@ -6,6 +6,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Portal from './pages/Portal';
+import About from './pages/About';
+import Platforms from './pages/Platforms';
+import Partner from './pages/Partner';
+import Careers from './pages/Careers';
+import Contact from './pages/Contact';
+import AdminDashboard from './pages/AdminDashboard';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import AIEthics from './pages/AIEthics';
@@ -23,6 +29,12 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/portal" element={<Portal />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/platforms" element={<Platforms />} />
+            <Route path="/partner" element={<Partner />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/recruitment" element={<AdminDashboard />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/ai-ethics" element={<AIEthics />} />

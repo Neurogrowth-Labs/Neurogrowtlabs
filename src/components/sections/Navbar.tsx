@@ -36,10 +36,11 @@ export default function Navbar() {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">About</button>
-          <button onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Ecosystem</button>
-          <button onClick={() => document.getElementById('infrastructure')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Infrastructure</button>
-          <button onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Services</button>
+          <button onClick={() => { navigate('/about'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">About</button>
+          <button onClick={() => { navigate('/platforms'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Ecosystem</button>
+          <button onClick={() => { navigate('/'); setTimeout(() => document.getElementById('infrastructure')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Infrastructure</button>
+          <button onClick={() => { navigate('/partner'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Partner</button>
+          <button onClick={() => { navigate('/contact'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Contact</button>
         </div>
 
         <button 
