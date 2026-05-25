@@ -5,16 +5,16 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-midnight-black: #05060A;
-  --color-deep-space-blue: #0A0F1A;
+  --color-midnight-black: #050505;
+  --color-graphite-grey: #111111;
+  --color-deep-charcoal: #171717;
   --color-electric-blue: #00E5FF;
+  --color-ai-cyan: #00FFFF;
   --color-violet-glow: #7B61FF;
-  --color-graphite-grey: #1A1A1A;
+  --color-soft-white: #F8FAFC;
   --color-quantum-silver: #BFC7D5;
-  --color-neon-cyan: #00FFFF;
-  --color-ai-green: #00FF66;
   --color-glass-surface: rgba(255, 255, 255, 0.03);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
 
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-float: float 6s ease-in-out infinite;

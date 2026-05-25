@@ -1,0 +1,55 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
+import { Hexagon, Lock } from 'lucide-react';
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <motion.nav 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-6 transition-all duration-500 ${
+        scrolled ? 'py-4' : 'py-6'
+      }`}
+    >
+      <div 
+        className={`flex items-center justify-between w-full max-w-6xl rounded-2xl border px-6 transition-all duration-500 backdrop-blur-xl ${
+          scrolled 
+            ? 'bg-midnight-black/80 border-glass-border shadow-2xl py-3' 
+            : 'bg-transparent border-transparent py-4'
+        }`}
+      >
+        <Link to="/" className="flex items-center gap-2 group">
+          <Hexagon className="w-8 h-8 text-electric-blue group-hover:text-violet-glow transition-all duration-300" />
+          <span className="text-xl font-bold tracking-tight text-white hidden sm:block">Neurogrowth Labs</span>
+        </Link>
+        
+        <div className="hidden md:flex items-center gap-8">
+          <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">About</button>
+          <button onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Ecosystem</button>
+          <button onClick={() => document.getElementById('infrastructure')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Infrastructure</button>
+          <button onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Services</button>
+        </div>
+
+        <button 
+          onClick={() => navigate('/portal')}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 border border-glass-border font-medium text-sm text-white hover:bg-white hover:text-midnight-black transition-all duration-300"
+        >
+          <Lock className="w-4 h-4" />
+          <span>Access Portal</span>
+        </button>
+      </div>
+    </motion.nav>
+  );
+}
