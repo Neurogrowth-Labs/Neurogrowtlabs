@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Hexagon, Lock } from 'lucide-react';
+import { Hexagon } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,14 +42,6 @@ export default function Navbar() {
           <button onClick={() => { navigate('/partner'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Partner</button>
           <button onClick={() => { navigate('/contact'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Contact</button>
         </div>
-
-        <button 
-          onClick={() => navigate('/portal')}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 border border-glass-border font-medium text-sm text-white hover:bg-white hover:text-midnight-black transition-all duration-300"
-        >
-          <Lock className="w-4 h-4" />
-          <span>Access Portal</span>
-        </button>
       </div>
     </motion.nav>
   );

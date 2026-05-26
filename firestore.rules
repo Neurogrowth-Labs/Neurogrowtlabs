@@ -79,6 +79,14 @@ service cloud.firestore {
              data.createdAt is timestamp;
     }
 
+    function isValidChatMessage(data) {
+      return hasOnlyAllowedFields(['role', 'text', 'timestamp', 'systemPromptContext']) &&
+             data.role in ['user', 'ai', 'system'] &&
+             data.text is string && data.text.size() <= 5000 &&
+             (!('systemPromptContext' in data) || (data.systemPromptContext is string && data.systemPromptContext.size() <= 5000)) &&
+             data.timestamp is timestamp;
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow create: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && 
@@ -100,6 +108,21 @@ service cloud.firestore {
                     request.resource.data.userId == resource.data.userId &&
                     request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+
+    match /chat_sessions/{sessionId} {
+      // allow anyone to read their session based on the session ID
+      allow read: if true;
+      allow create: if true;
+      allow update: if false;
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if true;
+        allow create: if isValidChatMessage(request.resource.data);
+        allow update: if false;
+        allow delete: if false;
+      }
     }
   }
 }

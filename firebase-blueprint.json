@@ -27,6 +27,24 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "userId", "type", "query", "result", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "Chat Session",
+      "description": "A chat session created for anonymous or logged-in users.",
+      "type": "object",
+      "properties": {}
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message within a chat session.",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string", "enum": ["user", "ai", "system"] },
+        "text": { "type": "string" },
+        "systemPromptContext": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["role", "text", "timestamp"]
     }
   },
   "firestore": {
@@ -37,6 +55,16 @@
     "analyses/{analysisId}": {
       "schema": { "$ref": "#/entities/Analysis" },
       "description": "Stores saved AI analyses for users."
+    },
+    "chat_sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/ChatSession" },
+      "description": "Stores chat sessions.",
+      "subcollections": {
+        "messages/{messageId}": {
+          "schema": { "$ref": "#/entities/ChatMessage" },
+          "description": "Stores chat messages."
+        }
+      }
     }
   }
 }

@@ -80,6 +80,94 @@ export default function Partner() {
         </div>
       </section>
 
+      {/* Global & African Partners */}
+      <section className="py-24 px-6 bg-deep-charcoal relative border-t border-glass-border overflow-hidden">
+        <div className="max-w-7xl mx-auto mb-16 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Trusted by Industry Leaders</h2>
+          <p className="text-quantum-silver max-w-2xl mx-auto text-lg">Empowering the biggest enterprises across Africa and the globe with sovereign AI infrastructure.</p>
+        </div>
+
+        {/* Marquee Container */}
+        <div className="relative w-full flex overflow-hidden group">
+           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-deep-charcoal to-transparent z-10" />
+           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-deep-charcoal to-transparent z-10" />
+
+           <motion.div 
+             className="flex whitespace-nowrap"
+             animate={{ x: ["0%", "-50%"] }}
+             transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+           >
+             {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex gap-16 px-8 items-center">
+                   {/* Global */}
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-ai-cyan">M</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Microsoft</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-electric-blue">G</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Google</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-green-400">N</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">NVIDIA</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-orange-400">A</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">AWS</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-blue-500">I</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">IBM</span>
+                   </div>
+
+                   {/* African */}
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center">
+                         <span className="text-xl font-black text-yellow-400">M</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">MTN</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-blue-600/10 border border-blue-600/30 flex items-center justify-center">
+                         <span className="text-xl font-black text-blue-600">S</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Standard Bank</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-green-500/10 border border-green-500/30 flex items-center justify-center">
+                         <span className="text-xl font-black text-green-500">S</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Safaricom</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-red-600/10 border border-red-600/30 flex items-center justify-center">
+                         <span className="text-xl font-black text-red-600">V</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Vodacom</span>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-glass-border flex items-center justify-center">
+                         <span className="text-xl font-black text-blue-400">N</span>
+                      </div>
+                      <span className="text-2xl font-bold text-white opacity-80">Naspers</span>
+                   </div>
+                </div>
+             ))}
+           </motion.div>
+        </div>
+      </section>
+
       {/* Onboarding Experience */}
       <section className="py-32 px-6 relative overflow-hidden bg-midnight-black">
         <div className="absolute inset-0 z-0">

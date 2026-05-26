@@ -21,6 +21,7 @@ import DPA from './pages/DPA';
 import SecurityPolicy from './pages/SecurityPolicy';
 import { AuthProvider } from './components/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import TebogoChatbot from './components/ui/TebogoChatbot';
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -66,6 +67,7 @@ export default function App() {
       <AuthProvider>
         <Router>
           <AnimatedRoutes />
+          <TebogoChatbot />
         </Router>
       </AuthProvider>
     </ErrorBoundary>
