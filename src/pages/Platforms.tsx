@@ -73,6 +73,33 @@ const platforms = [
   }
 ];
 
+const PlatformCard = React.memo(({ platform, idx, onClick }: { platform: any, idx: number, onClick: () => void }) => (
+  <motion.div 
+    layoutId={`card-container-${platform.id}`}
+    onClick={onClick}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: idx * 0.1 }}
+    className="group relative h-72 rounded-3xl p-6 cursor-pointer bg-glass-surface backdrop-blur-md border border-glass-border hover:border-electric-blue/50 overflow-hidden flex flex-col justify-between"
+  >
+    {/* Glow ring on hover */}
+    <div className={`absolute top-0 right-0 w-32 h-32 blur-[60px] bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-40 transition-opacity duration-700`} />
+    
+    <motion.div layoutId={`icon-${platform.id}`} className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+        <platform.icon className="w-6 h-6 text-white" />
+    </motion.div>
+    
+    <div>
+        <motion.h3 layoutId={`title-${platform.id}`} className="text-xl font-bold text-white mb-2">{platform.name}</motion.h3>
+        <motion.p layoutId={`desc-${platform.id}`} className="text-sm text-quantum-silver leading-relaxed line-clamp-2">{platform.desc}</motion.p>
+    </div>
+
+    <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-x-2 group-hover:translate-x-0">
+        <ArrowRight className="w-5 h-5 text-ai-cyan" />
+    </div>
+  </motion.div>
+));
+
 export default function Platforms() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -116,31 +143,7 @@ export default function Platforms() {
       <section className="relative px-6 z-10 max-w-7xl mx-auto -mt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
            {platforms.map((platform, idx) => (
-             <motion.div 
-               layoutId={`card-container-${platform.id}`}
-               key={platform.id}
-               onClick={() => setSelectedId(platform.id)}
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: idx * 0.1 }}
-               className="group relative h-72 rounded-3xl p-6 cursor-pointer bg-glass-surface backdrop-blur-md border border-glass-border hover:border-electric-blue/50 overflow-hidden flex flex-col justify-between"
-             >
-                {/* Glow ring on hover */}
-                <div className={`absolute top-0 right-0 w-32 h-32 blur-[60px] bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-40 transition-opacity duration-700`} />
-                
-                <motion.div layoutId={`icon-${platform.id}`} className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                   <platform.icon className="w-6 h-6 text-white" />
-                </motion.div>
-                
-                <div>
-                   <motion.h3 layoutId={`title-${platform.id}`} className="text-xl font-bold text-white mb-2">{platform.name}</motion.h3>
-                   <motion.p layoutId={`desc-${platform.id}`} className="text-sm text-quantum-silver leading-relaxed line-clamp-2">{platform.desc}</motion.p>
-                </div>
-
-                <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-x-2 group-hover:translate-x-0">
-                   <ArrowRight className="w-5 h-5 text-ai-cyan" />
-                </div>
-             </motion.div>
+             <PlatformCard key={platform.id} platform={platform} idx={idx} onClick={() => setSelectedId(platform.id)} />
            ))}
         </div>
       </section>

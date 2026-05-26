@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Hexagon, Twitter, Linkedin, Github } from 'lucide-react';
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      setStatus('error');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setStatus('error');
+      return;
+    }
+
+    setStatus('success');
+    setEmail('');
+    setTimeout(() => setStatus('idle'), 3000);
+  };
+
   return (
     <footer className="bg-midnight-black pt-20 pb-10 px-6 border-t border-glass-border">
       <div className="max-w-7xl mx-auto">
@@ -33,12 +54,13 @@ export default function Footer() {
               <p className="text-quantum-silver text-sm mb-4 max-w-sm">
                 Subscribe to receive updates on the NeuroGrowth Labs ecosystem and African tech innovations.
               </p>
-              <form className="flex gap-2 max-w-sm" onSubmit={(e) => { e.preventDefault(); const t = e.currentTarget as HTMLFormElement; t.reset(); }}>
+              <form className="flex gap-2 max-w-sm" onSubmit={handleSubscribe}>
                 <input 
                   type="email" 
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
                   placeholder="Enter your email" 
-                  className="flex-1 bg-white/5 border border-glass-border rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-ai-cyan focus:bg-white/10 transition-colors"
-                  required
+                  className={`flex-1 bg-white/5 border ${status === 'error' ? 'border-red-500' : 'border-glass-border'} rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-ai-cyan focus:bg-white/10 transition-colors`}
                 />
                 <button 
                   type="submit" 
@@ -47,6 +69,8 @@ export default function Footer() {
                   Subscribe
                 </button>
               </form>
+              {status === 'success' && <p className="text-green-400 text-xs mt-2">Successfully subscribed!</p>}
+              {status === 'error' && <p className="text-red-400 text-xs mt-2">Please enter a valid email address.</p>}
             </div>
           </div>
 
