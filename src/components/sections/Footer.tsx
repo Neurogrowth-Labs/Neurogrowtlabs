@@ -6,9 +6,9 @@ export default function Footer() {
   return (
     <footer className="bg-midnight-black pt-20 pb-10 px-6 border-t border-glass-border">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-6 group">
               <Hexagon className="w-8 h-8 text-electric-blue group-hover:text-violet-glow transition-colors" />
               <span className="text-xl font-bold tracking-tight text-white">Neurogrowth Labs</span>
@@ -17,15 +17,36 @@ export default function Footer() {
               Building the intelligence layer for the modern economy. Headquartered in Cape Town, shaping the future globally.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
+              <a href="https://x.com/neurogrowthlabs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
+              <a href="https://www.linkedin.com/company/neurogrowthlabs/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
                 <Linkedin className="w-4 h-4" />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
                 <Github className="w-4 h-4" />
               </a>
+            </div>
+
+            <div className="mt-10">
+              <h4 className="text-white font-bold mb-4 tracking-wide text-sm uppercase">Newsletter</h4>
+              <p className="text-quantum-silver text-sm mb-4 max-w-sm">
+                Subscribe to receive updates on the NeuroGrowth Labs ecosystem and African tech innovations.
+              </p>
+              <form className="flex gap-2 max-w-sm" onSubmit={(e) => { e.preventDefault(); const t = e.currentTarget as HTMLFormElement; t.reset(); }}>
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="flex-1 bg-white/5 border border-glass-border rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-ai-cyan focus:bg-white/10 transition-colors"
+                  required
+                />
+                <button 
+                  type="submit" 
+                  className="bg-white text-midnight-black hover:bg-ai-cyan hover:text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
 
