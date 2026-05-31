@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Hexagon } from 'lucide-react';
+import { Hexagon, Moon, Sun } from 'lucide-react';
+import { useTheme } from '../ThemeContext';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +43,10 @@ export default function Navbar() {
           <button onClick={() => { navigate('/'); setTimeout(() => document.getElementById('infrastructure')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Infrastructure</button>
           <button onClick={() => { navigate('/partner'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Partner</button>
           <button onClick={() => { navigate('/contact'); window.scrollTo(0,0); }} className="text-sm font-medium text-quantum-silver hover:text-white transition-colors">Contact</button>
+          
+          <button onClick={toggleTheme} className="w-8 h-8 rounded-full border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:bg-white/5 transition-colors">
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
         </div>
       </div>
     </motion.nav>

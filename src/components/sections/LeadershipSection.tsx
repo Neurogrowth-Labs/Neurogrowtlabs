@@ -33,7 +33,7 @@ const leadershipData = [
   },
   {
     name: "Francis Matsoso",
-    role: "Head of AI Research and Security Architect",
+    role: "Chief Security & Compliance Officer (CSCO)",
     desc: "Leading the design, development, and governance, AI research initiatives and cybersecurity architecture.",
     linkedin: "#",
     twitter: "#"

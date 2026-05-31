@@ -21,6 +21,7 @@ import DPA from './pages/DPA';
 import SecurityPolicy from './pages/SecurityPolicy';
 import { AuthProvider } from './components/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { ThemeProvider } from './components/ThemeContext';
 import TebogoChatbot from './components/ui/TebogoChatbot';
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
@@ -30,7 +31,7 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-midnight-black"
+      className="min-h-screen bg-midnight-black dark:bg-midnight-black light:bg-white"
     >
       {children}
     </motion.div>
@@ -64,12 +65,14 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <Router>
-          <AnimatedRoutes />
-          <TebogoChatbot />
-        </Router>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <AnimatedRoutes />
+            <TebogoChatbot />
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

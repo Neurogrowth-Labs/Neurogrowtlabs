@@ -25,7 +25,7 @@ export default function SocialProofSection() {
                Trust & Scale
              </div>
              <h2 className="text-3xl font-bold text-white mb-4">
-               A $4B AI Infrastructure Ecosystem
+               The Africa AI Infrastructure Ecosystem
              </h2>
              <p className="text-quantum-silver text-sm leading-relaxed">
                Trusted by governments, national-scale institutions, and elite enterprises to power intelligent decision making and automation.
