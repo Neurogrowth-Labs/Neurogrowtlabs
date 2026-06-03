@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Hexagon, Twitter, Linkedin, Github } from 'lucide-react';
+import { Hexagon, Twitter, Linkedin, Github, Youtube } from 'lucide-react';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -44,8 +44,11 @@ export default function Footer() {
               <a href="https://www.linkedin.com/company/neurogrowthlabs/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
+              <a href="https://github.com/Neurogrowth-Labs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
                 <Github className="w-4 h-4" />
+              </a>
+              <a href="https://www.youtube.com/@neurogrowthlabs" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-graphite-grey border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-electric-blue transition-all">
+                <Youtube className="w-4 h-4" />
               </a>
             </div>
 

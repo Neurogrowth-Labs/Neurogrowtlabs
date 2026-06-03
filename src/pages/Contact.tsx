@@ -377,8 +377,8 @@ export default function Contact() {
                   {[
                      { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/company/neurogrowthlabs/', color: 'hover:text-blue-500 hover:border-blue-500 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]' },
                      { icon: Twitter, label: 'X (Twitter)', href: 'https://x.com/neurogrowthlabs', color: 'hover:text-white hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]' },
-                     { icon: Github, label: 'GitHub', href: '#', color: 'hover:text-slate-300 hover:border-slate-300 hover:shadow-[0_0_15px_rgba(203,213,225,0.3)]' },
-                     { icon: Youtube, label: 'YouTube', href: '#', color: 'hover:text-red-500 hover:border-red-500 hover:shadow-[0_0_15px_rgba(239,68,68,0.5)]' },
+                     { icon: Github, label: 'GitHub', href: 'https://github.com/Neurogrowth-Labs', color: 'hover:text-slate-300 hover:border-slate-300 hover:shadow-[0_0_15px_rgba(203,213,225,0.3)]' },
+                     { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@neurogrowthlabs', color: 'hover:text-red-500 hover:border-red-500 hover:shadow-[0_0_15px_rgba(239,68,68,0.5)]' },
                      { icon: FlaskConical, label: 'Research', href: '#', color: 'hover:text-ai-cyan hover:border-ai-cyan hover:shadow-[0_0_15px_rgba(0,229,255,0.5)]' },
                   ].map((social, i) => (
                      <a key={i} href={social.href} target={social.href !== '#' ? "_blank" : undefined} rel={social.href !== '#' ? "noopener noreferrer" : undefined} className={`group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-glass-border text-quantum-silver transition-all duration-300 ${social.color}`}>
