@@ -23,6 +23,7 @@ import { AuthProvider } from './components/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ThemeProvider } from './components/ThemeContext';
 import TebogoChatbot from './components/ui/TebogoChatbot';
+import SEO from './components/SEO';
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -68,6 +69,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <Router>
+            <SEO />
             <AnimatedRoutes />
             <TebogoChatbot />
           </Router>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Building2, Landmark, Globe } from 'lucide-react';
+import { Wallet, Network, Globe, Lock, Shield } from 'lucide-react';
 
 const partners = [
-  { icon: Shield, name: "Ministry of Defense" },
-  { icon: Landmark, name: "Central Bank Digital" },
-  { icon: Building2, name: "Pan-African Infrastructure fund" },
-  { icon: Globe, name: "Global Trade Org" },
-  { icon: Shield, name: "Cyber Command" },
+  { icon: Wallet, name: "Fintech Infrastructure" },
+  { icon: Network, name: "Pan-African Infrastructure" },
+  { icon: Globe, name: "Intra Trade & Global Trade" },
+  { icon: Lock, name: "Cybersecurity" },
+  { icon: Shield, name: "Defense and Disaster Response" },
 ];
 
 export default function SocialProofSection() {
@@ -28,7 +28,7 @@ export default function SocialProofSection() {
                The Africa AI Infrastructure Ecosystem
              </h2>
              <p className="text-quantum-silver text-sm leading-relaxed">
-               Trusted by governments, national-scale institutions, and elite enterprises to power intelligent decision making and automation.
+               Our highly qualified executives are open to provide high value technological capacity programs, advisory and AI infrastructure projects development for governments, national-scale institutions, and elite enterprises with AI powered intelligent decision making and automation ecosystem.
              </p>
            </motion.div>
         </div>

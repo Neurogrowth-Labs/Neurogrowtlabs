@@ -121,9 +121,8 @@ import Footer from '../components/sections/Footer';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import LeadershipSection from '../components/sections/LeadershipSection';
 import { useNavigate } from 'react-router-dom';
-import africanAiNetwork from '../assets/images/african_ai_network_1779816833116.png';
 import { 
-  ArrowRight, Globe, Brain, Zap, Cpu, Network, ShieldCheck, 
+  ArrowRight, Globe, Brain, Zap, Cpu, Network, ShieldCheck, Server as LucideServer,
   Lightbulb, Rocket, Activity, Target, Layers, BarChart3, Database, Fingerprint, Linkedin, Twitter
 } from 'lucide-react';
 
@@ -205,13 +204,34 @@ export default function About() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-ai-cyan/20 to-electric-blue/20 rounded-full blur-[80px] group-hover:opacity-100 opacity-50 transition-opacity duration-700" />
                   
                   {/* African Technological Advance Visual */}
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden border border-glass-border shadow-[0_0_50px_rgba(0,229,255,0.15)] group-hover:shadow-[0_0_60px_rgba(0,229,255,0.25)] transition-all duration-700">
-                     <img 
-                        src={africanAiNetwork} 
-                        alt="African AI Network" 
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
-                     />
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden border border-glass-border shadow-[0_0_50px_rgba(0,229,255,0.15)] group-hover:shadow-[0_0_60px_rgba(0,229,255,0.25)] transition-all duration-700 bg-gradient-to-br from-graphite-grey to-midnight-black flex items-center justify-center p-8 min-h-[300px]">
+                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.1)_0%,transparent_100%)]" />
+                     {/* Floating nodes */}
+                     <div className="relative w-full h-full flex flex-col justify-between">
+                        <div className="flex justify-between items-center">
+                           <div className="w-10 h-10 rounded-lg bg-electric-blue/10 border border-electric-blue/30 flex items-center justify-center animate-[float_4s_ease-in-out_infinite]">
+                              <Cpu className="w-5 h-5 text-electric-blue" />
+                           </div>
+                           <div className="w-24 h-[1px] bg-gradient-to-r from-electric-blue/50 to-ai-cyan/50 flex-grow mx-4" />
+                           <div className="w-10 h-10 rounded-lg bg-ai-cyan/10 border border-ai-cyan/30 flex items-center justify-center animate-[float_5s_ease-in-out_infinite_1s]">
+                              <Network className="w-5 h-5 text-ai-cyan" />
+                           </div>
+                        </div>
+                        <div className="flex justify-center my-6">
+                           <div className="w-16 h-16 rounded-full bg-violet-glow/10 border border-violet-glow/30 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(123,97,255,0.3)]">
+                              <Brain className="w-8 h-8 text-violet-glow" />
+                           </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                           <div className="w-10 h-10 rounded-lg bg-violet-glow/10 border border-violet-glow/30 flex items-center justify-center animate-[float_6s_ease-in-out_infinite_2s]">
+                              <Database className="w-5 h-5 text-violet-glow" />
+                           </div>
+                           <div className="w-24 h-[1px] bg-gradient-to-r from-violet-glow/50 to-electric-blue/50 flex-grow mx-4" />
+                           <div className="w-10 h-10 rounded-lg bg-electric-blue/10 border border-electric-blue/30 flex items-center justify-center animate-[float_4s_ease-in-out_infinite_3s]">
+                              <ShieldCheck className="w-5 h-5 text-electric-blue" />
+                           </div>
+                        </div>
+                     </div>
                      <div className="absolute inset-0 border border-white/10 rounded-2xl z-10 pointer-events-none" />
                   </div>
                </div>
@@ -262,7 +282,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
              {[
                { title: "Artificial Intelligence", desc: "AI agents, intelligent systems, machine learning, and enterprise AI orchestration.", icon: Brain, color: "text-blue-400" },
-               { title: "Enterprise Infrastructure", desc: "Scalable enterprise software, cloud systems, automation, and operational intelligence.", icon: Server, color: "text-emerald-400" },
+               { title: "Enterprise Infrastructure", desc: "Scalable enterprise software, cloud systems, automation, and operational intelligence.", icon: LucideServer, color: "text-emerald-400" },
                { title: "Fintech Innovation", desc: "Digital payments, financial infrastructure, intelligent transactions, and AI finance.", icon: Zap, color: "text-amber-400" },
                { title: "Smart Governance", desc: "AI-enabled governance systems, digital public infrastructure, and intelligent civic technology.", icon: ShieldCheck, color: "text-fuchsia-400" },
                { title: "Data Intelligence", desc: "Analytics platforms, predictive systems, business intelligence, and strategic data ecosystems.", icon: Database, color: "text-cyan-400" },

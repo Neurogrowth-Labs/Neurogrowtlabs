@@ -142,7 +142,7 @@ export default function ProductsSection() {
         >
           <div className="inline-flex flex-col items-center">
              <Layers className="w-8 h-8 text-ai-cyan mb-4" />
-             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Platform Ecosystem</h2>
+             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Infrastructures We Have Built</h2>
              <p className="text-quantum-silver text-lg max-w-3xl mx-auto">
                Next-generation operating systems and artificial intelligence primitives engineered for scale, reliability, and unparalleled performance.
              </p>
