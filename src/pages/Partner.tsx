@@ -18,12 +18,177 @@ const partnershipModels = [
   { icon: Target, title: "Innovation Labs", desc: "Co-hosted laboratories designed to incubate next-generation AI-first companies." },
 ];
 
+const pastCollaborators = [
+  {
+    name: "Safaricom",
+    category: "Global Enterprise",
+    type: "known",
+    desc: "Co-developed secure automated validation microservices for regional payment integrations across East Africa.",
+    color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400"
+  },
+  {
+    name: "Standard Bank Group",
+    category: "Global Enterprise",
+    type: "known",
+    desc: "Architected advanced machine learning models to detect complex anomaly patterns in high-volume digital treasury workflows.",
+    color: "bg-blue-500/5 border-blue-500/15 text-blue-400"
+  },
+  {
+    name: "Limkokwing University of Creative Technology",
+    category: "Academic Institution",
+    type: "known",
+    desc: "Partnered on cutting-edge human-computer interaction research and creative tech curriculum development.",
+    color: "bg-pink-500/5 border-pink-500/15 text-pink-400"
+  },
+  {
+    name: "East Wine Africa",
+    category: "Commercial Niche",
+    type: "unknown",
+    desc: "Integrated real-time predictive demand forecasting algorithms to optimize cross-border logistics and cold-chain distribution channels.",
+    color: "bg-amber-500/5 border-amber-500/15 text-amber-400"
+  },
+  {
+    name: "African Youth Forum International",
+    category: "NGO / Non-Profit",
+    type: "known",
+    desc: "Sponsored and facilitated tech workshops to empower future African leaders with AI literacy and digital product engineering skills.",
+    color: "bg-fuchsia-500/5 border-fuchsia-500/15 text-fuchsia-400"
+  },
+  {
+    name: "Elmwood Field Leadership Alliance",
+    category: "Specialized Advisory",
+    type: "unknown",
+    desc: "Engineered a collaborative enterprise database portal supporting high-fidelity sovereign leadership performance metrics.",
+    color: "bg-teal-500/5 border-teal-500/15 text-teal-400"
+  },
+  {
+    name: "City Scope Africa",
+    category: "Regional Media",
+    type: "unknown",
+    desc: "Provided AI-powered semantic search and natural language processing API pipelines to automate local and regional news synthesis.",
+    color: "bg-cyan-500/5 border-cyan-500/15 text-cyan-400"
+  },
+  {
+    name: "Apex Tech Solutions",
+    category: "Emerging Tech",
+    type: "unknown",
+    desc: "Collaborated on designing high-throughput cloud edge storage and regional compute cluster partitions in Southern Africa.",
+    color: "bg-violet-500/5 border-violet-500/15 text-violet-400"
+  },
+  {
+    name: "Meridian Agribusiness",
+    category: "Agri-Tech Logistics",
+    type: "unknown",
+    desc: "Deployed micro-climate satellite data feeds with deep learning predictive forecasting to guide localized agricultural planning.",
+    color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400"
+  },
+  {
+    name: "Soko Logistics",
+    category: "Commercial Niche",
+    type: "unknown",
+    desc: "Created smart dynamic routing algorithms and machine-learning-driven last-mile delivery fleet optimization systems.",
+    color: "bg-rose-500/5 border-rose-500/15 text-rose-400"
+  }
+];
+
+const renderCollabLogo = (name: string) => {
+  switch (name) {
+    case "Safaricom":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <circle cx="12" cy="12" r="9" className="stroke-emerald-500/20" />
+          <path d="M16 8c-1.5-2-5-2-6.5 0s-1.5 5 0 7c1.5 2 5 2 6.5 0" />
+          <path d="M12 10c-0.8-1-2.5-1-3.3 0s-0.8 2.5 0 3.5" strokeWidth="1.5" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+      );
+    case "Standard Bank Group":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" className="fill-blue-500/10" />
+          <path d="M12 8v8" strokeWidth="2.5" />
+          <path d="M9 12h6" strokeWidth="2.5" />
+        </svg>
+      );
+    case "Limkokwing University of Creative Technology":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-5-7z" fill="currentColor" fillOpacity="0.15" />
+          <path d="M5 20h14" strokeWidth="2.5" />
+          <circle cx="12" cy="14" r="2" fill="currentColor" />
+        </svg>
+      );
+    case "East Wine Africa":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2v12" />
+          <path d="M12 14c4 0 7-3 7-7H5c0 4 3 7 7 7z" fill="currentColor" fillOpacity="0.15" />
+          <path d="M9 22h6" strokeWidth="2.5" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+      );
+    case "African Youth Forum International":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" className="stroke-fuchsia-500/20" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="currentColor" fillOpacity="0.05" />
+          <path d="M2 12h20" />
+        </svg>
+      );
+    case "Elmwood Field Leadership Alliance":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 12h10L10 22l10-10H10L12 2z" fill="currentColor" fillOpacity="0.15" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+      );
+    case "City Scope Africa":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" className="stroke-cyan-500/20" />
+          <path d="M7 14V11c0-.6.4-1 1-1h1c.6 0 1 .4 1 1v3" />
+          <path d="M11 14V9c0-.6.4-1 1-1h1c.6 0 1 .4 1 1v5" strokeWidth="2.5" />
+          <path d="M15 14V12c0-.6.4-1 1-1h1c.6 0 1 .4 1 1v2" />
+          <line x1="5" y1="14" x2="19" y2="14" />
+        </svg>
+      );
+    case "Apex Tech Solutions":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 17l8-8 8 8" strokeWidth="2.5" />
+          <path d="M4 10l8-8 8 8" className="stroke-violet-500/50" />
+          <line x1="12" y1="9" x2="12" y2="20" strokeWidth="1.5" />
+        </svg>
+      );
+    case "Meridian Agribusiness":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 22C2 12 10 4 22 2c0 10-8 18-20 20z" fill="currentColor" fillOpacity="0.15" />
+          <path d="M2 22l20-20" />
+          <path d="M12 12a14 14 0 0 0-4 6" />
+          <path d="M12 12a14 14 0 0 1 6-4" />
+        </svg>
+      );
+    case "Soko Logistics":
+      return (
+        <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="currentColor" fillOpacity="0.05" />
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+          <line x1="12" y1="22.08" x2="12" y2="12" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
+
 function Device(props: any) {
   return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>;
 }
 
 export default function Partner() {
   const [step, setStep] = useState(1);
+  const [collabFilter, setCollabFilter] = useState<'all' | 'known' | 'unknown'>('all');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ 
@@ -178,6 +343,114 @@ export default function Partner() {
                 </motion.div>
              ))}
           </div>
+        </div>
+      </section>
+
+      {/* Past Collaborations Section */}
+      <section className="py-32 px-6 relative z-10 bg-midnight-black border-t border-glass-border overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-electric-blue/5 blur-[120px] rounded-full" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-ai-cyan/5 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ai-cyan/5 border border-ai-cyan/10 text-ai-cyan text-[10px] font-mono uppercase tracking-[0.2em] mb-4">
+                Proven Global Footprint
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                Strategic Past Collaborations
+              </h2>
+              <p className="text-quantum-silver text-lg font-light leading-relaxed">
+                We have engineered next-generation platforms, integrated secure automation networks, and deployed capacity building workshops with an elite spectrum of partners. This includes prominent multinational institutions as well as highly specialized niche commercial actors.
+              </p>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex bg-white/5 border border-glass-border p-1 rounded-full shrink-0 self-start md:self-auto backdrop-blur-md">
+              {(['all', 'known', 'unknown'] as const).map((filter) => {
+                const label = filter === 'all' 
+                  ? 'All Partners (10)' 
+                  : filter === 'known' 
+                    ? 'Prominent/Established' 
+                    : 'Specialized/Niche';
+                const isActive = collabFilter === filter;
+                return (
+                  <button
+                    key={filter}
+                    onClick={() => setCollabFilter(filter)}
+                    className={`px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-all duration-300 whitespace-nowrap ${
+                      isActive 
+                        ? 'bg-ai-cyan text-midnight-black font-semibold shadow-[0_0_15px_rgba(0,229,255,0.4)] px-4 py-2' 
+                        : 'text-quantum-silver hover:text-white hover:bg-white/5 px-4 py-2'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Cards Grid */}
+          <motion.div 
+            layout 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {pastCollaborators.filter(c => collabFilter === 'all' || c.type === collabFilter).map((collab, index) => {
+              return (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  key={collab.name}
+                  className="group relative p-8 rounded-3xl bg-glass-surface backdrop-blur-md border border-glass-border hover:border-white/10 transition-all duration-500 overflow-hidden flex flex-col justify-between min-h-[280px]"
+                >
+                  {/* Subtle hover background highlight gradient */}
+                  <div className="absolute -inset-[1px] bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
+                  
+                  <div>
+                    {/* Header: Avatar, Name, Category */}
+                    <div className="flex items-start justify-between gap-4 mb-6">
+                      <div className={`w-11 h-11 rounded-xl ${collab.color} flex items-center justify-center border shrink-0 group-hover:scale-105 group-hover:border-white/20 transition-all duration-500`}>
+                        {renderCollabLogo(collab.name)}
+                      </div>
+                      
+                      <span className={`text-[9px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full border ${
+                        collab.type === 'known' 
+                          ? 'text-ai-cyan bg-ai-cyan/5 border-ai-cyan/10' 
+                          : 'text-violet-glow bg-violet-glow/5 border-violet-glow/10'
+                      }`}>
+                        {collab.category}
+                      </span>
+                    </div>
+
+                    {/* Company Details */}
+                    <h3 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-ai-cyan transition-colors duration-300">
+                      {collab.name}
+                    </h3>
+                    <p className="text-quantum-silver text-sm leading-relaxed font-light mb-6">
+                      {collab.desc}
+                    </p>
+                  </div>
+
+                  {/* Operational Alignment Footer */}
+                  <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-quantum-silver/40">
+                    <span className="uppercase tracking-[0.15em]">
+                      Systems Synced
+                    </span>
+                    <span className="text-emerald-400 font-bold uppercase tracking-[0.15em] flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Certified
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 

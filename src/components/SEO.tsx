@@ -167,6 +167,49 @@ export default function SEO() {
         description = "Discover our multi-layered cybersecurity architectures, secure container deployments, and zero-trust data storage rules.";
         break;
 
+      case '/webinar':
+        title = "Sovereign AI Infrastructure Webinars & Programs | NeuroGrowth Labs";
+        description = "Join NeuroGrowth Labs' exclusive live virtual webinars on high-performance sovereign AI compute, liquidity bridge protocols, and secure LLM distribution.";
+        keywords = "Sovereign AI Webinars, AI Infrastructure Seminars, Enterprise Machine Learning Programs, National Computing Stacks, Pan-African Tech Summit";
+        
+        // Structured JSON-LD Event Schema for search-discoverable webinars
+        const webinarEventSchema = {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "name": "Sovereign AI Infrastructure Masterclass Series",
+          "description": "Unlock high-fidelity national compute architectures and secure multi-tenant model distribution frameworks. Led by NeuroGrowth Labs systems architects.",
+          "startDate": "2026-07-15T15:00:00+02:00",
+          "endDate": "2026-07-15T16:30:00+02:00",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+          "location": {
+            "@type": "VirtualLocation",
+            "url": "https://neurogrowthlabs.com/webinar"
+          },
+          "image": [
+            "https://neurogrowthlabs.com/favicon.svg"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "url": "https://neurogrowthlabs.com/webinar",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "validFrom": "2026-07-01T00:00:00Z"
+          },
+          "performer": {
+            "@type": "Organization",
+            "name": "NeuroGrowth Labs Research Division"
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "NeuroGrowth Labs",
+            "url": "https://neurogrowthlabs.com"
+          }
+        };
+        schemas.push(webinarEventSchema);
+        break;
+
       default:
         break;
     }

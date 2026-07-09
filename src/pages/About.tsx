@@ -123,7 +123,8 @@ import LeadershipSection from '../components/sections/LeadershipSection';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, Globe, Brain, Zap, Cpu, Network, ShieldCheck, Server as LucideServer,
-  Lightbulb, Rocket, Activity, Target, Layers, BarChart3, Database, Fingerprint, Linkedin, Twitter
+  Lightbulb, Rocket, Activity, Target, Layers, BarChart3, Database, Fingerprint, Linkedin, Twitter,
+  Building, GraduationCap, Users, Briefcase
 } from 'lucide-react';
 
 export default function About() {
