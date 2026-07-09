@@ -51,10 +51,30 @@ const leadershipData = [
   {
     name: "Linford Musiyambodza",
     role: "Chief AI Product Architecture Development Officer",
-    desc: "Architect of large-scale distributed systems and enterprise AI platforms.",
+    desc: "Self-taught software and AI engineer building purpose-led solutions from Strand, Cape Town.",
     image: "https://media.licdn.com/dms/image/v2/D4D03AQHy7y3w6okZHQ/profile-displayphoto-scale_400_400/B4DZmqzO.cJcAg-/0/1759507184401?e=1785369600&v=beta&t=WPCGLT755z3gKUR7JQx6Kr6nU1KM51E-yzGOU2YFsVc",
     linkedin: "#",
-    twitter: "#"
+    twitter: "#",
+    longBio: [
+      "Linford Musiyambodza is a self-taught software and AI engineer building from Strand, Cape Town. He founded Linfy Tech Solutions to turn AI into tools people can actually use, protecting wildlife, digitizing the informal economy, and making security accessible.",
+      "His work runs from computer vision and multi-agent systems to full-stack products shipped end to end. He cares about craft, but more about impact: software that reaches communities that usually get built for last, not first.",
+      "Faith sits at the center of it. Every project he ships carries the same signature: El Roi, the God who sees the work."
+    ],
+    keyPillars: [
+      { title: "Self-taught engineer", description: "From first lines of code to production AI systems." },
+      { title: "AI & agentic builder", description: "Multi-agent orchestration, LLM apps, computer vision." },
+      { title: "Founder", description: "Linfy Tech Solutions and NeuroGrowth Labs." },
+      { title: "Christian", description: "Purpose-led work, grounded in faith." },
+      { title: "Africa-first", description: "Solving problems where he lives, for people he knows." }
+    ],
+    expertise: [
+      { field: "AI & Agentic", tech: "Agentic AI, LLMs, Prompt Engineering, RAG, Multi-agent (A2A), Computer Vision" },
+      { field: "Frontend", tech: "React, Next.js, TypeScript, Tailwind" },
+      { field: "Backend", tech: "Python, FastAPI, Node.js, REST APIs" },
+      { field: "Databases", tech: "Supabase, PostgreSQL, Firebase" },
+      { field: "Cloud & Delivery", tech: "Vercel, Render, Railway, GitHub" },
+      { field: "Cybersecurity", tech: "Threat Analysis, Phishing Detection, Secure Auth, Linux / Kali" }
+    ]
   },
   {
     name: "Muhammad Nur Ismanto",
@@ -213,6 +233,19 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
                           <p key={idx} className="text-quantum-silver leading-relaxed">{para}</p>
                         ))}
                       </div>
+                      {member.keyPillars && (
+                        <div className="mt-8 pt-6 border-t border-glass-border">
+                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Core Pillars</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {member.keyPillars.map((pillar: any, idx: number) => (
+                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
+                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{pillar.title}</div>
+                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{pillar.description}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       {member.expertise && (
                         <div className="mt-8 pt-6 border-t border-glass-border">
                           <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Strategic Expertise Fields</h4>
