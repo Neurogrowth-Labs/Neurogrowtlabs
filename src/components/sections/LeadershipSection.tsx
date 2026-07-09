@@ -7,7 +7,7 @@ const leadershipData = [
     name: "Mr. Lusimanadio Soki Simao, MBA",
     role: "Founder & Chief Executive Officer",
     desc: "Visionary entrepreneur building AI platforms designed to accelerate global economic transformation.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256&h=256",
+    image: "https://media.licdn.com/dms/image/v2/D4D03AQF97hhNCtJS0Q/profile-displayphoto-scale_400_400/B4DZoo4HDmKUAg-/0/1761622390856?e=1785369600&v=beta&t=fzWdMw_97M1KmJJiv8sSz7gM_V0RLfd2Jqjf3kntmUA",
     linkedin: "#",
     twitter: "#",
     longBio: [
@@ -32,7 +32,7 @@ const leadershipData = [
     name: "Nguyen Van Hoang",
     role: "Chief AI & ML Engineer",
     desc: "Specialist in scalable infrastructure engineering and advanced software systems.",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=256&h=256",
+    image: "https://scontent-cpt1-1.xx.fbcdn.net/v/t39.30808-6/742020693_122112743169312295_2769183148926381290_n.jpg?stp=dst-jpg_tt6&cstp=mx1066x1600&ctp=s1066x1600&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=cRQB4Pm6zCMQ7kNvwEZlTWx&_nc_oc=AdqDfD4IN5Yxgd3wiCaf7BW2cX_sCrbeWLAqUaAPd6zj2-M2Zk289l4dsC_DnRMQcaI&_nc_zt=23&_nc_ht=scontent-cpt1-1.xx&_nc_gid=Kjx9xDFdlCRF5k_rmStbGQ&_nc_ss=7b2a8&oh=00_AQAYBVBr7iZqfZuGsuqAELXveyHT936dlWxBedQJdHWOBg&oe=6A549870",
     linkedin: "#",
     twitter: "#",
     longBio: [
@@ -50,9 +50,9 @@ const leadershipData = [
   },
   {
     name: "Linford Musiyambodza",
-    role: "Head of AI Product Development & Architecture",
+    role: "Chief AI Product Architecture Development Officer",
     desc: "Architect of large-scale distributed systems and enterprise AI platforms.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256&h=256",
+    image: "https://media.licdn.com/dms/image/v2/D4D03AQHy7y3w6okZHQ/profile-displayphoto-scale_400_400/B4DZmqzO.cJcAg-/0/1759507184401?e=1785369600&v=beta&t=WPCGLT755z3gKUR7JQx6Kr6nU1KM51E-yzGOU2YFsVc",
     linkedin: "#",
     twitter: "#"
   },
@@ -60,7 +60,7 @@ const leadershipData = [
     name: "Muhammad Nur Ismanto",
     role: "Chief Technology Officer",
     desc: "Technology leader focused on deep AI innovation and intelligent enterprise platforms.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256",
+    image: "https://www.sepuh.group/assets/owner-CSCV74KJ.png",
     linkedin: "#",
     twitter: "#",
     longBio: [
@@ -89,7 +89,7 @@ const leadershipData = [
     name: "Francis Matsoso",
     role: "Chief Security & Compliance Officer (CSCO)",
     desc: "Leading the design, development, and governance, AI research initiatives and cybersecurity architecture.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256&h=256",
+    image: "https://scontent-cpt1-1.xx.fbcdn.net/v/t39.30808-6/738774321_122112742419312295_2257722314483275506_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx719x691&ctp=s719x691&_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=TEMuTvIbUMAQ7kNvwER8N2A&_nc_oc=AdrHDQ6-r5THTZA_it2wcAV0WoD2QobJJvsVJCzaU6YowCh0VS64Q2oYuYuZ67CrAMo&_nc_zt=23&_nc_ht=scontent-cpt1-1.xx&_nc_gid=51VGqPI-Qbmp4cvGYJNIeA&_nc_ss=7b2a8&oh=00_AQBKZU7xycQAJ4N-q-jqIhJbQYR65oJAXHvNiEM1J0C93Q&oe=6A54AF06",
     linkedin: "#",
     twitter: "#",
     longBio: [
@@ -134,14 +134,31 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
       layout
       whileHover={{ scale: isExpanded ? 1 : 1.02 }}
       onClick={!isExpanded ? onExpand : undefined}
-      className={`relative p-8 rounded-2xl bg-midnight-black/60 border border-glass-border overflow-hidden group transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] ${isExpanded ? 'h-auto max-h-[85vh] overflow-y-auto w-full md:w-[46rem] max-w-2xl scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent' : 'h-[340px] max-w-[340px] shrink-0 cursor-pointer'}`}
+      className={`relative p-8 rounded-2xl bg-midnight-black/60 border border-glass-border overflow-hidden group transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)] ${isExpanded ? 'h-auto max-h-[85vh] overflow-y-auto w-full md:w-[46rem] max-w-2xl scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent' : 'h-[340px] max-w-[340px] shrink-0 cursor-pointer'}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-electric-blue/5 to-transparent transition-opacity pointer-events-none" />
+      {/* Background Image Layer */}
+      {member.image ? (
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-2xl">
+          <img 
+            src={member.image} 
+            alt={member.name} 
+            className={`w-full h-full object-cover transition-transform duration-700 ${isExpanded ? 'scale-100 opacity-45' : 'opacity-75 group-hover:opacity-90 group-hover:scale-105'}`} 
+            referrerPolicy="no-referrer"
+          />
+          {/* Multi-layered gradient overlay to guarantee readability of white text */}
+          <div className="absolute inset-0 bg-gradient-to-t from-midnight-black via-midnight-black/60 to-transparent" />
+          {isExpanded && (
+            <div className="absolute inset-0 bg-midnight-black/40 backdrop-blur-[1px]" />
+          )}
+        </div>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-electric-blue/5 to-transparent transition-opacity pointer-events-none" />
+      )}
 
-      {/* Dynamic Background Hover */}
+      {/* Dynamic Background Radial Hover Glow */}
       {!isExpanded && (
         <motion.div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1"
           style={{
             background: useTransform(
               [mouseX, mouseY],
@@ -153,117 +170,105 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
 
       {/* Content */}
       <motion.div layout className="relative z-10 h-full flex flex-col justify-between" style={{ minHeight: isExpanded ? 'auto' : '100%' }}>
-        <div>
-          <div className="flex justify-between items-start mb-6">
-            <motion.div layout className="w-20 h-20 rounded-2xl bg-glass-surface border border-glass-border flex items-center justify-center backdrop-blur-sm shadow-lg overflow-hidden relative group-hover:border-electric-blue/40 transition-colors duration-300">
-              {member.image ? (
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                <span className="text-3xl font-bold text-white">{member.name.charAt(0)}</span>
-              )}
-            </motion.div>
-            {!isExpanded ? (
-              <button
-                onClick={(e) => { e.stopPropagation(); onExpand(); }}
-                className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-ai-cyan hover:bg-ai-cyan/10 transition-all opacity-0 group-hover:opacity-100"
-              >
-                <Maximize2 className="w-4 h-4" />
-              </button>
-            ) : (
-              <button
-                onClick={(e) => { e.stopPropagation(); onClose(); }}
-                className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-red-400 hover:border-red-400 hover:bg-red-400/10 transition-all"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-          
-          <motion.h3 layout className={`${isExpanded ? 'text-2xl' : 'text-xl'} font-bold text-white mb-2`}>{member.name}</motion.h3>
-          <motion.p layout className="text-ai-cyan font-mono text-sm uppercase tracking-wider mb-4">{member.role}</motion.p>
-          
-          {(isExpanded || true) && (
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className={isExpanded ? "block" : "hidden group-hover:block transition-all duration-300"}
-              >
-                {!isExpanded && (
-                  <p className="text-quantum-silver text-sm leading-relaxed mb-6">{member.desc}</p>
-                )}
-                {isExpanded && (
-                  <div className="text-sm text-quantum-silver leading-relaxed mb-6 space-y-4">
-                    {member.longBio ? (
-                      <>
-                        <div className="space-y-4 pr-1">
-                          {member.longBio.map((para: string, idx: number) => (
-                            <p key={idx} className="text-quantum-silver leading-relaxed">{para}</p>
-                          ))}
-                        </div>
-                        {member.expertise && (
-                          <div className="mt-8 pt-6 border-t border-glass-border">
-                            <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Strategic Expertise Fields</h4>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              {member.expertise.map((exp: any, idx: number) => (
-                                <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
-                                  <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{exp.field}</div>
-                                  <div className="text-quantum-silver text-xs font-light leading-relaxed">{exp.tech}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        {member.honors && (
-                          <div className="mt-8 pt-6 border-t border-glass-border">
-                            <h4 className="text-sm font-bold text-white mb-3 tracking-wider uppercase font-mono text-ai-cyan">Distinguished Honors</h4>
-                            <div className="p-4 rounded-xl bg-ai-cyan/5 border border-ai-cyan/20">
-                              <p className="text-white text-sm font-semibold">{member.honors}</p>
-                            </div>
-                          </div>
-                        )}
-                        {member.credentials && (
-                          <div className="mt-8 pt-6 border-t border-glass-border">
-                            <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan font-semibold">Credentials & Compliance</h4>
-                            <div className="text-xs text-quantum-silver mb-3 uppercase tracking-wider font-mono">Verified Executive Frameworks</div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              {member.credentials.map((cred: any, idx: number) => (
-                                <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
-                                  <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{cred.title}</div>
-                                  <div className="text-quantum-silver text-xs font-light leading-relaxed">{cred.issuer}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <p>{member.desc}</p>
-                        <p className="mt-4 pt-4 border-t border-glass-border">Background: An established leader shaping the next generation of AI ecosystems and African digital transformation. Focuses on scalable engineering, enterprise design, and deep technology integration.</p>
-                      </>
-                    )}
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+        {/* Top Control Bar */}
+        <div className="flex justify-end">
+          {!isExpanded ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); onExpand(); }}
+              className="w-10 h-10 rounded-full bg-midnight-black/60 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-ai-cyan hover:bg-ai-cyan/10 transition-all opacity-0 group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+            >
+              <Maximize2 className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              onClick={(e) => { e.stopPropagation(); onClose(); }}
+              className="w-10 h-10 rounded-full bg-midnight-black/60 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-red-400 hover:border-red-400 hover:bg-red-400/10 transition-all shadow-lg backdrop-blur-sm"
+            >
+              <X className="w-4 h-4" />
+            </button>
           )}
         </div>
 
-        <motion.div layout className={`flex gap-4 mt-auto pt-6 border-t border-glass-border ${isExpanded ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity duration-300`}>
-          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all">
-             <Linkedin className="w-4 h-4" />
-          </a>
-          <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-gray-300 hover:bg-white/10 transition-all">
-             <Twitter className="w-4 h-4" />
-          </a>
-        </motion.div>
+        {/* Profile Info, Bio, and Social Links */}
+        <div className={isExpanded ? "mt-4" : "mt-auto"}>
+          <motion.h3 layout className={`${isExpanded ? 'text-2xl mb-1' : 'text-xl mb-1'} font-bold text-white`}>{member.name}</motion.h3>
+          <motion.p layout className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-4">{member.role}</motion.p>
+          
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className={isExpanded ? "block" : "hidden group-hover:block transition-all duration-300"}
+            >
+              {!isExpanded && (
+                <p className="text-quantum-silver text-sm leading-relaxed mb-4">{member.desc}</p>
+              )}
+              {isExpanded && (
+                <div className="text-sm text-quantum-silver leading-relaxed mb-6 space-y-4">
+                  {member.longBio ? (
+                    <>
+                      <div className="space-y-4 pr-1">
+                        {member.longBio.map((para: string, idx: number) => (
+                          <p key={idx} className="text-quantum-silver leading-relaxed">{para}</p>
+                        ))}
+                      </div>
+                      {member.expertise && (
+                        <div className="mt-8 pt-6 border-t border-glass-border">
+                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Strategic Expertise Fields</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {member.expertise.map((exp: any, idx: number) => (
+                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
+                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{exp.field}</div>
+                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{exp.tech}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {member.honors && (
+                        <div className="mt-8 pt-6 border-t border-glass-border">
+                          <h4 className="text-sm font-bold text-white mb-3 tracking-wider uppercase font-mono text-ai-cyan">Distinguished Honors</h4>
+                          <div className="p-4 rounded-xl bg-ai-cyan/5 border border-ai-cyan/20">
+                            <p className="text-white text-sm font-semibold">{member.honors}</p>
+                          </div>
+                        </div>
+                      )}
+                      {member.credentials && (
+                        <div className="mt-8 pt-6 border-t border-glass-border">
+                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan font-semibold">Credentials & Compliance</h4>
+                          <div className="text-xs text-quantum-silver mb-3 uppercase tracking-wider font-mono">Verified Executive Frameworks</div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {member.credentials.map((cred: any, idx: number) => (
+                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
+                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{cred.title}</div>
+                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{cred.issuer}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <p>{member.desc}</p>
+                      <p className="mt-4 pt-4 border-t border-glass-border">Background: An established leader shaping the next generation of AI ecosystems and African digital transformation. Focuses on scalable engineering, enterprise design, and deep technology integration.</p>
+                    </>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+          <motion.div layout className={`flex gap-4 pt-4 border-t border-glass-border ${isExpanded ? 'opacity-100 mt-6' : 'opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2'}`}>
+            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all">
+               <Linkedin className="w-4 h-4" />
+            </a>
+            <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-gray-300 hover:bg-white/10 transition-all">
+               <Twitter className="w-4 h-4" />
+            </a>
+          </motion.div>
+        </div>
       </motion.div>
 
     </motion.div>
@@ -272,7 +277,6 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
 
 const SkeletonCard = () => (
   <div className="h-[340px] max-w-[340px] shrink-0 p-8 rounded-2xl bg-midnight-black/40 border border-glass-border animate-pulse flex flex-col justify-end">
-     <div className="w-20 h-20 mb-6 rounded-2xl bg-white/5" />
      <div className="h-6 w-3/4 bg-white/5 rounded mb-3" />
      <div className="h-4 w-1/2 bg-white/5 rounded" />
   </div>

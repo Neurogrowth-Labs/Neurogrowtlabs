@@ -92,6 +92,7 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-6 tracking-wide">Company</h4>
             <ul className="space-y-4">
               <li><Link to="/about" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>About</Link></li>
+              <li><Link to="/webinar" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>AI Webinar Program</Link></li>
               <li><a href="#services" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Services</a></li>
               <li><a href="#infrastructure" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Infrastructure</a></li>
               <li><Link to="/careers" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>Careers</Link></li>

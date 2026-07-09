@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useAuth } from '../components/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Image as ImageIcon, Search, MapPin, Loader2, Upload, Brain } from 'lucide-react';
+import { LogOut, Image as ImageIcon, Search, MapPin, Loader2, Upload, Brain, ArrowLeft } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -194,6 +194,17 @@ export default function Portal() {
             <MapPin className="w-5 h-5" />
             <span className="font-medium">Maps Grounding</span>
           </button>
+          
+          <div className="pt-4 mt-4 border-t border-glass-border">
+            <button
+              onClick={() => navigate('/')}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-quantum-silver hover:bg-white/5 hover:text-white transition-colors border border-dashed border-glass-border"
+              id="portal-back-to-home"
+            >
+              <ArrowLeft className="w-4 h-4 text-ai-cyan" />
+              <span className="font-medium">Back to Home</span>
+            </button>
+          </div>
         </div>
 
         <div className="p-4 border-t border-glass-border">

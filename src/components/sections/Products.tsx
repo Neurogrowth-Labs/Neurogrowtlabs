@@ -132,7 +132,7 @@ const HolographicCard = ({ platform, index }: { platform: any, index: number }) 
 
 export default function ProductsSection() {
   return (
-    <section id="products" className="py-32 px-6 bg-deep-charcoal relative">
+    <section id="infrastructure" className="py-32 px-6 bg-deep-charcoal relative">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

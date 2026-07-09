@@ -47,8 +47,8 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 shrink-0 w-full relative z-20">
             <MagneticButton 
               onClick={() => {
-                navigate('/platforms');
-                window.scrollTo(0, 0);
+                navigate('/');
+                setTimeout(() => document.getElementById('infrastructure')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
               className="relative group w-full sm:w-auto overflow-hidden rounded-full p-[1px] transform-gpu"
             >
@@ -56,7 +56,7 @@ export default function HeroSection() {
               <span className="absolute inset-0 bg-gradient-to-r from-ai-cyan via-violet-glow to-electric-blue opacity-70 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full" />
               {/* Glassmorphism Surface */}
               <div className="relative flex items-center justify-center gap-2 px-8 py-4 bg-midnight-black/40 backdrop-blur-xl rounded-full border border-white/10 group-hover:bg-midnight-black/60 transition-all duration-300">
-                <span className="relative z-10 text-white font-medium tracking-wide">Explore Our Platforms</span>
+                <span className="relative z-10 text-white font-medium tracking-wide">Explore Infrastructure</span>
                 <ArrowRight className="relative z-10 w-4 h-4 text-ai-cyan group-hover:translate-x-1 transition-transform duration-300" />
                 {/* Subtle glow / Light sweeping effect */}
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none rounded-full" />

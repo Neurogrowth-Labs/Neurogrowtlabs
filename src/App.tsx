@@ -8,10 +8,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Landing from './pages/Landing';
 import Portal from './pages/Portal';
 import About from './pages/About';
-import Platforms from './pages/Platforms';
 import Partner from './pages/Partner';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import Webinar from './pages/Webinar';
 import AdminDashboard from './pages/AdminDashboard';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
@@ -47,10 +47,10 @@ function AnimatedRoutes() {
         <Route path="/" element={<PageTransition><Landing /></PageTransition>} />
         <Route path="/portal" element={<PageTransition><Portal /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-        <Route path="/platforms" element={<PageTransition><Platforms /></PageTransition>} />
         <Route path="/partner" element={<PageTransition><Partner /></PageTransition>} />
         <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        <Route path="/webinar" element={<PageTransition><Webinar /></PageTransition>} />
         <Route path="/admin/recruitment" element={<PageTransition><AdminDashboard /></PageTransition>} />
         <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
