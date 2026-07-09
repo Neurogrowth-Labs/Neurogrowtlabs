@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Hexagon, Twitter, Linkedin, Youtube, ShieldCheck } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { supabase } from '../../supabase';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -22,11 +23,28 @@ export default function Footer() {
     }
 
     try {
-      await addDoc(collection(db, 'subscriptions'), {
-        email: email.trim().toLowerCase(),
-        createdAt: serverTimestamp(),
-        status: 'active'
-      });
+      // 1. Dual-write to Firebase Firestore
+      try {
+        await addDoc(collection(db, 'subscriptions'), {
+          email: email.trim().toLowerCase(),
+          createdAt: serverTimestamp(),
+          status: 'active'
+        });
+      } catch (fErr) {
+        console.warn("Firebase newsletter subscription save failed:", fErr);
+      }
+
+      // 2. Dual-write to Supabase Database
+      try {
+        await supabase.from('subscriptions').insert({
+          email: email.trim().toLowerCase(),
+          status: 'active',
+          created_at: new Date().toISOString()
+        });
+      } catch (sErr) {
+        console.warn("Supabase newsletter subscription save failed:", sErr);
+      }
+
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);
@@ -37,6 +55,7 @@ export default function Footer() {
       setTimeout(() => setStatus('idle'), 3000);
     }
   };
+
 
   return (
     <footer className="bg-midnight-black pt-20 pb-10 px-6 border-t border-glass-border">

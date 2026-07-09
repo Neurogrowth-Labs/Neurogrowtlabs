@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, X, Send, Minimize2, Sparkles } from 'lucide-react';
 import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { supabase } from '../../supabase';
 
 export default function TebogoChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,24 +60,56 @@ export default function TebogoChatbot() {
 
     const messagesRef = collection(db, 'chat_sessions', sessionId, 'messages');
     
-    // Optimistic UI update handled by onSnapshot, but we still wait for addDoc
-    await addDoc(messagesRef, {
-      role: 'user',
-      text: userMessage,
-      timestamp: serverTimestamp()
-    });
+    // 1. Dual-write user message
+    try {
+      await addDoc(messagesRef, {
+        role: 'user',
+        text: userMessage,
+        timestamp: serverTimestamp()
+      });
+    } catch (fErr) {
+      console.warn("Firebase save chatbot message failed:", fErr);
+    }
+
+    try {
+      await supabase.from('chat_messages').insert({
+        session_id: sessionId,
+        role: 'user',
+        text: userMessage,
+        created_at: new Date().toISOString()
+      });
+    } catch (sErr) {
+      console.warn("Supabase save chatbot message failed:", sErr);
+    }
 
     // Simulate AI response with context
     setTimeout(async () => {
       setIsTyping(false);
       const aiResponse = `I see you are exploring our ${window.location.pathname} page. I am processing your request through our intelligence layer. While I currently function in a demonstration capacity, this interaction stream is being optimized for future full-stack automation.`;
       
-      await addDoc(messagesRef, {
-        role: 'ai',
-        text: aiResponse,
-        systemPromptContext: `Current Page URL: ${window.location.href}`,
-        timestamp: serverTimestamp()
-      });
+      // 2. Dual-write AI response
+      try {
+        await addDoc(messagesRef, {
+          role: 'ai',
+          text: aiResponse,
+          systemPromptContext: `Current Page URL: ${window.location.href}`,
+          timestamp: serverTimestamp()
+        });
+      } catch (fErr) {
+        console.warn("Firebase save chatbot AI message failed:", fErr);
+      }
+
+      try {
+        await supabase.from('chat_messages').insert({
+          session_id: sessionId,
+          role: 'ai',
+          text: aiResponse,
+          system_prompt_context: `Current Page URL: ${window.location.href}`,
+          created_at: new Date().toISOString()
+        });
+      } catch (sErr) {
+        console.warn("Supabase save chatbot AI message failed:", sErr);
+      }
     }, 1500);
   };
 

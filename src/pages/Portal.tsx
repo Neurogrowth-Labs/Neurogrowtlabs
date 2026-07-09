@@ -14,11 +14,12 @@ import {
   orderBy 
 } from 'firebase/firestore';
 import { db } from '../firebase';
+import { supabase } from '../supabase';
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 import { 
   LogOut, ShieldCheck, Mail, Calendar, Users, Handshake, MessageSquare, 
-  Plus, Trash2, Check, X, Search, Clock, PlusCircle, AlertCircle, Sparkles, ArrowLeft
+  Plus, Trash2, Check, X, Search, Clock, PlusCircle, AlertCircle, Sparkles, ArrowLeft, Copy, CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -49,6 +50,10 @@ export default function Portal() {
   // Loading states for dashboard panels
   const [dataLoading, setDataLoading] = useState(true);
 
+  // SQL Schema guide states
+  const [showSqlGuide, setShowSqlGuide] = useState(false);
+  const [copiedSql, setCopiedSql] = useState(false);
+
   // New Webinar Form State
   const [showAddWebinar, setShowAddWebinar] = useState(false);
   const [newWebinar, setNewWebinar] = useState({
@@ -59,34 +64,108 @@ export default function Portal() {
     team: '2 Speakers + 1 Moderator'
   });
 
-  // Fetch Firestore Data when authenticated as admin
+  // Fetch Data when authenticated as admin
   const fetchAllData = async () => {
     setDataLoading(true);
     try {
       // 1. Webinars
-      const webinarsQuery = query(collection(db, 'webinars'));
-      const webinarsSnap = await getDocs(webinarsQuery);
-      const webinarsList = webinarsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      let webinarsList: any[] = [];
+      try {
+        const { data, error } = await supabase
+          .from('webinars')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        webinarsList = data || [];
+      } catch (sErr) {
+        console.warn("Supabase webinars fetch failed, trying Firebase Firestore:", sErr);
+        const webinarsQuery = query(collection(db, 'webinars'));
+        const webinarsSnap = await getDocs(webinarsQuery);
+        webinarsList = webinarsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
       setWebinars(webinarsList);
 
       // 2. Registrations
-      const regSnap = await getDocs(collection(db, 'webinar_registrations'));
-      const regList = regSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      let regList: any[] = [];
+      try {
+        const { data, error } = await supabase
+          .from('webinar_registrations')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        regList = data || [];
+      } catch (sErr) {
+        console.warn("Supabase webinar registrations fetch failed, trying Firebase Firestore:", sErr);
+        const regSnap = await getDocs(collection(db, 'webinar_registrations'));
+        regList = regSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
       setRegistrations(regList);
 
       // 3. Partners
-      const partnersSnap = await getDocs(collection(db, 'partner_applications'));
-      const partnersList = partnersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      let partnersList: any[] = [];
+      try {
+        const { data, error } = await supabase
+          .from('partner_applications')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        // Normalize schema names for UI compatibility
+        partnersList = (data || []).map(p => ({
+          id: p.id,
+          orgName: p.orgName || p.org_name || p.company,
+          orgType: p.orgType || p.org_type || p.type,
+          domainStack: p.domainStack || p.domain_stack || p.country || p.interest,
+          collabGoal: p.collabGoal || p.collab_goal || p.objectives,
+          repName: p.repName || p.rep_name || p.company,
+          email: p.email,
+          status: p.status
+        }));
+      } catch (sErr) {
+        console.warn("Supabase partner applications fetch failed, trying Firebase Firestore:", sErr);
+        const partnersSnap = await getDocs(collection(db, 'partner_applications'));
+        partnersList = partnersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
       setPartners(partnersList);
 
       // 4. Contacts
-      const contactsSnap = await getDocs(collection(db, 'contact_submissions'));
-      const contactsList = contactsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      let contactsList: any[] = [];
+      try {
+        const { data, error } = await supabase
+          .from('contact_submissions')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        // Normalize schema names for UI compatibility
+        contactsList = (data || []).map(c => ({
+          id: c.id,
+          fullName: c.fullName || c.full_name,
+          organization: c.organization,
+          email: c.email,
+          inquiryType: c.inquiryType || c.inquiry_type,
+          message: c.message,
+          status: c.status
+        }));
+      } catch (sErr) {
+        console.warn("Supabase contact submissions fetch failed, trying Firebase Firestore:", sErr);
+        const contactsSnap = await getDocs(collection(db, 'contact_submissions'));
+        contactsList = contactsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
       setContacts(contactsList);
 
       // 5. Subscriptions
-      const subSnap = await getDocs(collection(db, 'subscriptions'));
-      const subList = subSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      let subList: any[] = [];
+      try {
+        const { data, error } = await supabase
+          .from('subscriptions')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        subList = data || [];
+      } catch (sErr) {
+        console.warn("Supabase subscriptions fetch failed, trying Firebase Firestore:", sErr);
+        const subSnap = await getDocs(collection(db, 'subscriptions'));
+        subList = subSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
       setSubscriptions(subList);
     } catch (err) {
       console.error("Error fetching admin data:", err);
@@ -134,10 +213,30 @@ export default function Portal() {
   const handleAddWebinar = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'webinars'), {
-        ...newWebinar,
-        createdAt: serverTimestamp()
-      });
+      // 1. Dual-write to Firebase
+      try {
+        await addDoc(collection(db, 'webinars'), {
+          ...newWebinar,
+          createdAt: serverTimestamp()
+        });
+      } catch (fErr) {
+        console.warn("Firebase webinar create failed:", fErr);
+      }
+
+      // 2. Dual-write to Supabase
+      try {
+        await supabase.from('webinars').insert({
+          date: newWebinar.date,
+          track: newWebinar.track,
+          duration: newWebinar.duration,
+          focus: newWebinar.focus,
+          team: newWebinar.team,
+          created_at: new Date().toISOString()
+        });
+      } catch (sErr) {
+        console.warn("Supabase webinar create failed:", sErr);
+      }
+
       setShowAddWebinar(false);
       setNewWebinar({
         date: '',
@@ -156,7 +255,25 @@ export default function Portal() {
   const handleDeleteWebinar = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this webinar? This will also affect what displays on the public webinar page.")) return;
     try {
-      await deleteDoc(doc(db, 'webinars', id));
+      // 1. Firebase delete
+      try {
+        await deleteDoc(doc(db, 'webinars', id));
+      } catch (fErr) {
+        console.warn("Firebase webinar delete failed:", fErr);
+      }
+
+      // 2. Supabase delete
+      try {
+        await supabase.from('webinars').delete().eq('id', id);
+      } catch (sErr) {
+        // Also try casting to integer if necessary
+        try {
+          await supabase.from('webinars').delete().eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase webinar delete failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error deleting webinar:", err);
@@ -166,9 +283,26 @@ export default function Portal() {
   // Update Partner Application Status
   const handleUpdatePartnerStatus = async (id: string, newStatus: string) => {
     try {
-      await updateDoc(doc(db, 'partner_applications', id), {
-        status: newStatus
-      });
+      // 1. Firebase update
+      try {
+        await updateDoc(doc(db, 'partner_applications', id), {
+          status: newStatus
+        });
+      } catch (fErr) {
+        console.warn("Firebase partner status update failed:", fErr);
+      }
+
+      // 2. Supabase update
+      try {
+        await supabase.from('partner_applications').update({ status: newStatus }).eq('id', id);
+      } catch (sErr) {
+        try {
+          await supabase.from('partner_applications').update({ status: newStatus }).eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase partner status update failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error updating partner status:", err);
@@ -179,7 +313,24 @@ export default function Portal() {
   const handleDeletePartner = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this partner application?")) return;
     try {
-      await deleteDoc(doc(db, 'partner_applications', id));
+      // 1. Firebase delete
+      try {
+        await deleteDoc(doc(db, 'partner_applications', id));
+      } catch (fErr) {
+        console.warn("Firebase partner delete failed:", fErr);
+      }
+
+      // 2. Supabase delete
+      try {
+        await supabase.from('partner_applications').delete().eq('id', id);
+      } catch (sErr) {
+        try {
+          await supabase.from('partner_applications').delete().eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase partner delete failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error deleting partner application:", err);
@@ -188,10 +339,28 @@ export default function Portal() {
 
   // Toggle Contact read/unread state
   const handleToggleContactStatus = async (id: string, currentStatus: string) => {
+    const nextStatus = currentStatus === 'unread' ? 'read' : 'unread';
     try {
-      await updateDoc(doc(db, 'contact_submissions', id), {
-        status: currentStatus === 'unread' ? 'read' : 'unread'
-      });
+      // 1. Firebase update
+      try {
+        await updateDoc(doc(db, 'contact_submissions', id), {
+          status: nextStatus
+        });
+      } catch (fErr) {
+        console.warn("Firebase contact status update failed:", fErr);
+      }
+
+      // 2. Supabase update
+      try {
+        await supabase.from('contact_submissions').update({ status: nextStatus }).eq('id', id);
+      } catch (sErr) {
+        try {
+          await supabase.from('contact_submissions').update({ status: nextStatus }).eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase contact status update failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error updating contact status:", err);
@@ -202,7 +371,24 @@ export default function Portal() {
   const handleDeleteContact = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this inquiry?")) return;
     try {
-      await deleteDoc(doc(db, 'contact_submissions', id));
+      // 1. Firebase delete
+      try {
+        await deleteDoc(doc(db, 'contact_submissions', id));
+      } catch (fErr) {
+        console.warn("Firebase contact delete failed:", fErr);
+      }
+
+      // 2. Supabase delete
+      try {
+        await supabase.from('contact_submissions').delete().eq('id', id);
+      } catch (sErr) {
+        try {
+          await supabase.from('contact_submissions').delete().eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase contact delete failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error deleting contact inquiry:", err);
@@ -213,7 +399,24 @@ export default function Portal() {
   const handleDeleteSubscriber = async (id: string) => {
     if (!window.confirm("Are you sure you want to remove this email subscriber?")) return;
     try {
-      await deleteDoc(doc(db, 'subscriptions', id));
+      // 1. Firebase delete
+      try {
+        await deleteDoc(doc(db, 'subscriptions', id));
+      } catch (fErr) {
+        console.warn("Firebase subscription delete failed:", fErr);
+      }
+
+      // 2. Supabase delete
+      try {
+        await supabase.from('subscriptions').delete().eq('id', id);
+      } catch (sErr) {
+        try {
+          await supabase.from('subscriptions').delete().eq('id', parseInt(id, 10));
+        } catch (innerErr) {
+          console.warn("Supabase subscription delete failed:", sErr, innerErr);
+        }
+      }
+
       fetchAllData();
     } catch (err) {
       console.error("Error deleting subscriber:", err);
@@ -350,17 +553,7 @@ export default function Portal() {
                   </button>
                 </form>
 
-                <div className="mt-6 pt-6 border-t border-glass-border/30 flex justify-between text-xs font-mono text-quantum-silver">
-                  <button 
-                    type="button" 
-                    onClick={() => {
-                      setIsRegistering(!isRegistering);
-                      setAuthError(null);
-                    }} 
-                    className="hover:text-ai-cyan transition-colors"
-                  >
-                    {isRegistering ? 'Switch to Sign In' : 'Register Admin Key'}
-                  </button>
+                <div className="mt-6 pt-6 border-t border-glass-border/30 flex justify-end text-xs font-mono text-quantum-silver">
                   <button type="button" onClick={() => navigate('/')} className="hover:text-white transition-colors flex items-center gap-1">
                     <ArrowLeft className="w-3 h-3" /> Exit Gateway
                   </button>
@@ -797,6 +990,246 @@ export default function Portal() {
                 )}
               </AnimatePresence>
             )}
+          </div>
+
+          {/* Supabase Schema Configurator panel */}
+          <div className="mt-12 bg-graphite-grey/20 border border-glass-border rounded-3xl p-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-ai-cyan/5 blur-3xl rounded-full pointer-events-none" />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-glass-border/30 pb-4 mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-ai-cyan animate-pulse" /> Supabase Database Connection &amp; Schema Configurator
+                </h3>
+                <p className="text-quantum-silver text-xs mt-1">Initialize or verify your PostgreSQL database structure on your Supabase instance.</p>
+              </div>
+              <button
+                onClick={() => setShowSqlGuide(!showSqlGuide)}
+                className="px-4 py-2 bg-white/5 border border-glass-border text-xs font-mono text-white rounded-xl hover:bg-white/10 transition-all"
+              >
+                {showSqlGuide ? 'Hide Schema Matrix' : 'Display Schema SQL Script'}
+              </button>
+            </div>
+
+            <AnimatePresence>
+              {showSqlGuide && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4 overflow-hidden"
+                >
+                  <p className="text-sm text-quantum-silver leading-relaxed">
+                    Copy and run the following script in your{' '}
+                    <a
+                      href="https://supabase.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ai-cyan hover:underline"
+                    >
+                      Supabase SQL Editor
+                    </a>{' '}
+                    to automatically generate all required database tables, schema models, and Row Level Security (RLS) policies.
+                  </p>
+
+                  <div className="relative">
+                    <button
+                      onClick={() => {
+                        const sqlText = `
+-- 1. Create Subscriptions Table
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id SERIAL PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. Create Chat Messages Table
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id SERIAL PRIMARY KEY,
+  session_id TEXT NOT NULL,
+  role TEXT NOT NULL,
+  text TEXT NOT NULL,
+  system_prompt_context TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Create Partner Applications Table
+CREATE TABLE IF NOT EXISTS partner_applications (
+  id SERIAL PRIMARY KEY,
+  company TEXT NOT NULL,
+  type TEXT,
+  country TEXT,
+  interest TEXT,
+  objectives TEXT,
+  email TEXT NOT NULL,
+  status TEXT DEFAULT 'pending',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. Create Contact Submissions Table
+CREATE TABLE IF NOT EXISTS contact_submissions (
+  id SERIAL PRIMARY KEY,
+  full_name TEXT NOT NULL,
+  organization TEXT,
+  email TEXT NOT NULL,
+  team_scale TEXT,
+  goal TEXT,
+  message TEXT,
+  inquiry_type TEXT,
+  status TEXT DEFAULT 'unread',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. Create Webinars Table
+CREATE TABLE IF NOT EXISTS webinars (
+  id SERIAL PRIMARY KEY,
+  date TEXT NOT NULL,
+  track TEXT DEFAULT 'Free Webinar',
+  duration TEXT,
+  focus TEXT,
+  team TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. Create Webinar Registrations Table
+CREATE TABLE IF NOT EXISTS webinar_registrations (
+  id SERIAL PRIMARY KEY,
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  organization TEXT,
+  title TEXT,
+  country TEXT,
+  interest_sector TEXT,
+  comments TEXT,
+  track TEXT DEFAULT 'Free Webinar',
+  status TEXT DEFAULT 'registered',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 7. Disable RLS or Enable Custom Public RLS policies for rapid deployment
+ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE partner_applications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webinars ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webinar_registrations ENABLE ROW LEVEL SECURITY;
+
+-- Allow broad read/write access policies for demo integrity
+CREATE POLICY "Public full access" ON subscriptions FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON chat_messages FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON partner_applications FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON contact_submissions FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON webinars FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON webinar_registrations FOR ALL USING (true) WITH CHECK (true);
+`;
+                        navigator.clipboard.writeText(sqlText.trim());
+                        setCopiedSql(true);
+                        setTimeout(() => setCopiedSql(false), 3000);
+                      }}
+                      className="absolute top-3 right-3 p-2 bg-midnight-black/80 border border-glass-border rounded-lg text-quantum-silver hover:text-white transition-all flex items-center gap-1 text-xs font-mono"
+                    >
+                      {copiedSql ? (
+                        <>
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" /> Copy SQL
+                        </>
+                      )}
+                    </button>
+                    <pre className="p-4 bg-midnight-black/80 border border-glass-border rounded-2xl text-xs font-mono text-quantum-silver overflow-x-auto max-h-72 leading-relaxed">
+{`-- 1. Create Subscriptions Table
+CREATE TABLE IF NOT EXISTS subscriptions (
+  id SERIAL PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. Create Chat Messages Table
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id SERIAL PRIMARY KEY,
+  session_id TEXT NOT NULL,
+  role TEXT NOT NULL,
+  text TEXT NOT NULL,
+  system_prompt_context TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Create Partner Applications Table
+CREATE TABLE IF NOT EXISTS partner_applications (
+  id SERIAL PRIMARY KEY,
+  company TEXT NOT NULL,
+  type TEXT,
+  country TEXT,
+  interest TEXT,
+  objectives TEXT,
+  email TEXT NOT NULL,
+  status TEXT DEFAULT 'pending',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. Create Contact Submissions Table
+CREATE TABLE IF NOT EXISTS contact_submissions (
+  id SERIAL PRIMARY KEY,
+  full_name TEXT NOT NULL,
+  organization TEXT,
+  email TEXT NOT NULL,
+  team_scale TEXT,
+  goal TEXT,
+  message TEXT,
+  inquiry_type TEXT,
+  status TEXT DEFAULT 'unread',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. Create Webinars Table
+CREATE TABLE IF NOT EXISTS webinars (
+  id SERIAL PRIMARY KEY,
+  date TEXT NOT NULL,
+  track TEXT DEFAULT 'Free Webinar',
+  duration TEXT,
+  focus TEXT,
+  team TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. Create Webinar Registrations Table
+CREATE TABLE IF NOT EXISTS webinar_registrations (
+  id SERIAL PRIMARY KEY,
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  organization TEXT,
+  title TEXT,
+  country TEXT,
+  interest_sector TEXT,
+  comments TEXT,
+  track TEXT DEFAULT 'Free Webinar',
+  status TEXT DEFAULT 'registered',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 7. Configure simple access control policies
+ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE partner_applications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webinars ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webinar_registrations ENABLE ROW LEVEL SECURITY;
+
+-- Allow broad access for the demonstration
+CREATE POLICY "Public full access" ON subscriptions FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON chat_messages FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON partner_applications FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON contact_submissions FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON webinars FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public full access" ON webinar_registrations FOR ALL USING (true) WITH CHECK (true);`}
+                    </pre>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
         </div>
