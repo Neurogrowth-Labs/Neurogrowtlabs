@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 import { MagneticButton } from '../components/ui/MagneticButton';
@@ -61,6 +63,50 @@ export default function Contact() {
     { role: 'ai', text: "Welcome to NeuroGrowth Labs. I am the AI Communication Assistant. I can help route your inquiry to the appropriate innovation, enterprise, or partnership team." }
   ]);
   const [chatInput, setChatInput] = useState('');
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    organization: '',
+    email: '',
+    teamScale: '10 - 50 Autonomous Agents',
+    goal: '',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.fullName || !formData.email) return;
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'contact_submissions'), {
+        ...formData,
+        inquiryType,
+        status: 'unread',
+        createdAt: serverTimestamp()
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Error saving contact transmission:", err);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResetContact = () => {
+    setFormData({
+      fullName: '',
+      organization: '',
+      email: '',
+      teamScale: '10 - 50 Autonomous Agents',
+      goal: '',
+      message: ''
+    });
+    setInquiryType('');
+    setSubmitted(false);
+  };
 
   useEffect(() => {
     if (location.hash) {
@@ -191,68 +237,84 @@ export default function Contact() {
                  <p className="text-quantum-silver text-lg">Our AI routing system will analyze your parameters and connect you with the precise innovation node.</p>
               </div>
 
-              <form className="space-y-6">
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="group">
-                       <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-ai-cyan transition-colors">Full Name</label>
-                       <input type="text" className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-ai-cyan/50 transition-colors" />
-                    </div>
-                    <div className="group">
-                       <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-electric-blue transition-colors">Organization</label>
-                       <input type="text" className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue/50 transition-colors" />
-                    </div>
-                 </div>
-
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="group">
-                       <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-ai-cyan transition-colors">Digital Identity (Email)</label>
-                       <input type="email" className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-ai-cyan/50 transition-colors" />
-                    </div>
-                    <div className="group">
-                       <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-electric-blue transition-colors">Inquiry Type</label>
-                       <select 
-                         value={inquiryType}
-                         onChange={(e) => setInquiryType(e.target.value)}
-                         className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue/50 transition-colors appearance-none"
-                       >
-                         <option value="">Select Routing Protocol...</option>
-                         <option value="General Inquiries">General Collaboration</option>
-                         <option value="Enterprise Solutions">Enterprise AI Operations</option>
-                         <option value="AI Innovation Lab">R&D Lab Research</option>
-                         <option value="Partnerships">Global Partnerships</option>
-                       </select>
-                    </div>
-                 </div>
-
-                 {/* Dynamic Enterprise Fields */}
-                 <AnimatePresence>
-                   {inquiryType === 'Enterprise Solutions' && (
-                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              {submitted ? (
+                  <div className="p-8 rounded-3xl bg-white/5 border border-glass-border text-center py-12 w-full">
+                     <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Sparkles className="w-8 h-8 text-emerald-500" />
+                     </div>
+                     <h3 className="text-2xl font-bold text-white mb-3">Transmission Successfully Routed</h3>
+                     <p className="text-quantum-silver text-sm leading-relaxed max-w-md mx-auto mb-8">
+                        Thank you, <strong className="text-white">{formData.fullName}</strong>. Your parameters for <strong className="text-white">{inquiryType || 'General Inquiries'}</strong> have been securely ingested by our neural routing layer. An associate will establish contact at <strong className="text-white">{formData.email}</strong> shortly.
+                     </p>
+                     <button type="button" onClick={handleResetContact} className="px-6 py-2.5 rounded-full border border-glass-border text-quantum-silver hover:text-white hover:bg-white/5 text-xs font-mono font-semibold uppercase tracking-wider transition-all">
+                        Initialize New Transmission
+                     </button>
+                  </div>
+               ) : (
+                  <form onSubmit={handleContactSubmit} className="space-y-6 w-full">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="group">
-                           <label className="text-xs font-mono text-electric-blue uppercase tracking-wider mb-2 block flex items-center gap-1"><Sparkles className="w-3 h-3" /> Team Scale</label>
-                           <select className="w-full bg-electric-blue/5 border border-electric-blue/20 rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue transition-colors appearance-none">
-                              <option>10 - 50 Autonomous Agents</option>
-                              <option>50 - 500 Enterprise Users</option>
-                              <option>500+ Ecosystem Deployment</option>
+                           <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-ai-cyan transition-colors">Full Name</label>
+                           <input type="text" required value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-ai-cyan/50 transition-colors animate-none" />
+                        </div>
+                        <div className="group">
+                           <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-electric-blue transition-colors">Organization</label>
+                           <input type="text" value={formData.organization} onChange={(e) => setFormData({...formData, organization: e.target.value})} className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue/50 transition-colors animate-none" />
+                        </div>
+                     </div>
+
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="group">
+                           <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-ai-cyan transition-colors">Digital Identity (Email)</label>
+                           <input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-ai-cyan/50 transition-colors animate-none" />
+                        </div>
+                        <div className="group">
+                           <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-electric-blue transition-colors">Inquiry Type</label>
+                           <select 
+                             required
+                             value={inquiryType}
+                             onChange={(e) => setInquiryType(e.target.value)}
+                             className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue/50 transition-colors appearance-none"
+                           >
+                             <option value="">Select Routing Protocol...</option>
+                             <option value="General Inquiries">General Collaboration</option>
+                             <option value="Enterprise Solutions">Enterprise AI Operations</option>
+                             <option value="AI Innovation Lab">R&D Lab Research</option>
+                             <option value="Partnerships">Global Partnerships</option>
                            </select>
                         </div>
-                        <div className="group">
-                           <label className="text-xs font-mono text-electric-blue uppercase tracking-wider mb-2 block flex items-center gap-1"><Sparkles className="w-3 h-3" /> Digital Transformation Goal</label>
-                           <input type="text" placeholder="e.g. Predictive Analytics, Trade Systems" className="w-full bg-electric-blue/5 border border-electric-blue/20 rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue transition-colors" />
-                        </div>
-                     </motion.div>
-                   )}
-                 </AnimatePresence>
+                     </div>
 
-                 <div className="group">
-                   <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-violet-glow transition-colors">Transmission Payload</label>
-                   <textarea rows={4} className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-violet-glow/50 transition-colors resize-none" />
-                 </div>
+                     {/* Dynamic Enterprise Fields */}
+                     <AnimatePresence>
+                       {inquiryType === 'Enterprise Solutions' && (
+                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                            <div className="group">
+                               <label className="text-xs font-mono text-electric-blue uppercase tracking-wider mb-2 block flex items-center gap-1"><Sparkles className="w-3 h-3" /> Team Scale</label>
+                               <select value={formData.teamScale} onChange={(e) => setFormData({...formData, teamScale: e.target.value})} className="w-full bg-electric-blue/5 border border-electric-blue/20 rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue transition-colors appearance-none">
+                                  <option>10 - 50 Autonomous Agents</option>
+                                  <option>50 - 500 Enterprise Users</option>
+                                  <option>500+ Ecosystem Deployment</option>
+                               </select>
+                            </div>
+                            <div className="group">
+                               <label className="text-xs font-mono text-electric-blue uppercase tracking-wider mb-2 block flex items-center gap-1"><Sparkles className="w-3 h-3" /> Digital Transformation Goal</label>
+                               <input type="text" placeholder="e.g. Predictive Analytics, Trade Systems" value={formData.goal} onChange={(e) => setFormData({...formData, goal: e.target.value})} className="w-full bg-electric-blue/5 border border-electric-blue/20 rounded-xl px-4 py-3.5 text-white outline-none focus:border-electric-blue transition-colors animate-none" />
+                            </div>
+                         </motion.div>
+                       )}
+                     </AnimatePresence>
 
-                 <MagneticButton className="px-8 py-4 w-full md:w-auto rounded-xl bg-white text-midnight-black font-semibold hover:bg-electric-blue hover:text-white hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-2">
-                    Transmit Payload <Send className="w-4 h-4" />
-                 </MagneticButton>
-              </form>
+                     <div className="group">
+                       <label className="text-xs font-mono text-quantum-silver uppercase tracking-wider mb-2 block group-focus-within:text-violet-glow transition-colors">Transmission Payload</label>
+                       <textarea rows={4} required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-midnight-black/40 border border-glass-border rounded-xl px-4 py-3.5 text-white outline-none focus:border-violet-glow/50 transition-colors resize-none" />
+                     </div>
+
+                     <MagneticButton type="submit" disabled={isSubmitting} className="px-8 py-4 w-full md:w-auto rounded-xl bg-white text-midnight-black font-semibold hover:bg-electric-blue hover:text-white hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+                        {isSubmitting ? "Transmitting..." : "Transmit Payload"} <Send className="w-4 h-4" />
+                     </MagneticButton>
+                  </form>
+               )}
            </motion.div>
 
            {/* Right: AI Chat Panel */}

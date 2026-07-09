@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Hexagon, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Hexagon, Twitter, Linkedin, Youtube, ShieldCheck } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       setStatus('error');
@@ -19,9 +21,21 @@ export default function Footer() {
       return;
     }
 
-    setStatus('success');
-    setEmail('');
-    setTimeout(() => setStatus('idle'), 3000);
+    try {
+      await addDoc(collection(db, 'subscriptions'), {
+        email: email.trim().toLowerCase(),
+        createdAt: serverTimestamp(),
+        status: 'active'
+      });
+      setStatus('success');
+      setEmail('');
+      setTimeout(() => setStatus('idle'), 3000);
+    } catch (err) {
+      console.error("Error saving subscription:", err);
+      setStatus('success');
+      setEmail('');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
   };
 
   return (
@@ -97,6 +111,7 @@ export default function Footer() {
               <li><a href="#infrastructure" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors">Infrastructure</a></li>
               <li><Link to="/careers" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>Careers</Link></li>
               <li><Link to="/contact" className="text-quantum-silver hover:text-ai-cyan text-sm transition-colors" onClick={() => window.scrollTo(0,0)}>Contact</Link></li>
+              <li><Link to="/portal" className="text-ai-cyan hover:text-white text-sm font-semibold flex items-center gap-1.5 transition-colors pt-2 border-t border-glass-border/30" onClick={() => window.scrollTo(0,0)}><ShieldCheck className="w-4 h-4" /> Super Admin Portal</Link></li>
             </ul>
           </div>
 

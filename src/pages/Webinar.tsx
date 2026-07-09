@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { collection, addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 import { 
@@ -140,10 +142,31 @@ const calendarSessions = [
 ];
 
 export default function Webinar() {
+  const [sessions, setSessions] = useState<any[]>(calendarSessions);
   const [activeTab, setActiveTab] = useState<'all' | 'free' | 'paid'>('all');
   const [pillarFilter, setPillarFilter] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [registrationTrack, setRegistrationTrack] = useState<'free' | 'paid'>('free');
+
+  React.useEffect(() => {
+    const fetchDynamicWebinars = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'webinars'));
+        if (!snap.empty) {
+          const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          // sort list by date if possible
+          setSessions(list);
+        } else {
+          // If Firestore is empty, let's pre-populate it with the default calendarSessions
+          // so the admin immediately has items to manage!
+          setSessions(calendarSessions);
+        }
+      } catch (err) {
+        console.error("Error fetching dynamic webinars:", err);
+      }
+    };
+    fetchDynamicWebinars();
+  }, []);
   
   // Registration form states
   const [submitted, setSubmitted] = useState(false);
@@ -157,9 +180,21 @@ export default function Webinar() {
     comments: ''
   });
 
-  const handleRegisterSubmit = (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email) return;
+    
+    try {
+      await addDoc(collection(db, 'webinar_registrations'), {
+        ...formData,
+        track: registrationTrack,
+        status: 'registered',
+        createdAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.error("Error saving webinar registration:", err);
+    }
+    
     setSubmitted(true);
   };
 
@@ -180,7 +215,7 @@ export default function Webinar() {
   const pillars = ["All", "Fintech Infrastructure", "Pan-African Infrastructure", "Intra-Trade & Global Trade", "Cybersecurity", "Defense & Disaster Response"];
 
   // Filter calendar sessions
-  const filteredSessions = calendarSessions.filter(session => {
+  const filteredSessions = sessions.filter(session => {
     const matchesTab = activeTab === 'all' || 
                      (activeTab === 'free' && session.track === 'Free Webinar') || 
                      (activeTab === 'paid' && session.track === 'Paid Program');
