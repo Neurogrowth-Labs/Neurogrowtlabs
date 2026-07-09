@@ -151,6 +151,7 @@ export default function Webinar() {
 
   React.useEffect(() => {
     const fetchDynamicWebinars = async () => {
+      let dbWebinars: any[] = [];
       try {
         // 1. Try fetching from Supabase first
         try {
@@ -160,26 +161,48 @@ export default function Webinar() {
             .order('created_at', { ascending: false });
           if (error) throw error;
           if (data && data.length > 0) {
-            setSessions(data);
-            return;
+            dbWebinars = data;
           }
         } catch (sErr) {
           console.warn("Supabase fetch webinars failed, falling back to Firebase:", sErr);
         }
 
-        // 2. Fallback to Firebase Firestore
-        const snap = await getDocs(collection(db, 'webinars'));
-        if (!snap.empty) {
-          const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          // sort list by date if possible
-          setSessions(list);
-        } else {
-          // If Firestore is empty, let's pre-populate it with the default calendarSessions
-          // so the admin immediately has items to manage!
-          setSessions(calendarSessions);
+        // 2. Fallback to Firebase Firestore if Supabase empty
+        if (dbWebinars.length === 0) {
+          try {
+            const snap = await getDocs(collection(db, 'webinars'));
+            if (!snap.empty) {
+              dbWebinars = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            }
+          } catch (fErr) {
+            console.warn("Firebase fetch webinars failed:", fErr);
+          }
         }
       } catch (err) {
-        console.error("Error fetching dynamic webinars:", err);
+        console.error("Database retrieval error for webinars:", err);
+      }
+
+      // Merge with any locally created webinars in localStorage
+      try {
+        const localWebinars = JSON.parse(localStorage.getItem('local_webinars') || '[]');
+        const combined = [...localWebinars, ...dbWebinars];
+        
+        // De-duplicate by some keys if needed, or if empty use defaults
+        if (combined.length > 0) {
+          // Filter duplicates by focus/date combination
+          const seen = new Set();
+          const unique = combined.filter(w => {
+            const key = `${w.date}-${w.focus}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+          setSessions(unique);
+        } else {
+          setSessions(calendarSessions);
+        }
+      } catch (lErr) {
+        console.error("Local storage processing failed for webinars:", lErr);
         setSessions(calendarSessions);
       }
     };
@@ -232,6 +255,28 @@ export default function Webinar() {
       });
     } catch (err) {
       console.error("Error saving webinar registration in Supabase:", err);
+    }
+
+    // 3. Fallback to localStorage list for immediate admin portal viewing
+    try {
+      const localRegs = JSON.parse(localStorage.getItem('local_webinar_registrations') || '[]');
+      localRegs.push({
+        id: 'reg-' + Date.now(),
+        fullName: formData.fullName,
+        email: formData.email,
+        organization: formData.organization,
+        title: formData.title,
+        country: formData.country,
+        interestSector: formData.interestSector,
+        comments: formData.comments,
+        track: registrationTrack === 'free' ? 'Free Webinar' : 'Paid Program',
+        status: 'registered',
+        created_at: new Date().toISOString(),
+        createdAt: new Date().toISOString()
+      });
+      localStorage.setItem('local_webinar_registrations', JSON.stringify(localRegs));
+    } catch (lErr) {
+      console.warn("localStorage webinar registration save failed:", lErr);
     }
     
     setSubmitted(true);

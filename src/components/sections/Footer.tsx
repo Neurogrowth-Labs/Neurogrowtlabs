@@ -45,6 +45,21 @@ export default function Footer() {
         console.warn("Supabase newsletter subscription save failed:", sErr);
       }
 
+      // 3. Fallback to localStorage list for immediate admin portal viewing
+      try {
+        const localSubs = JSON.parse(localStorage.getItem('local_subscriptions') || '[]');
+        localSubs.push({
+          id: 'sub-' + Date.now(),
+          email: email.trim().toLowerCase(),
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          created_at: new Date().toISOString()
+        });
+        localStorage.setItem('local_subscriptions', JSON.stringify(localSubs));
+      } catch (lErr) {
+        console.warn("localStorage subscription save failed:", lErr);
+      }
+
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);

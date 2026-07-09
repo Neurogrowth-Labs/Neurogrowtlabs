@@ -76,6 +76,31 @@ export default function Partner() {
         console.warn("Supabase partner application save failed:", sErr);
       }
 
+      // 3. Fallback to localStorage list for immediate admin portal viewing
+      try {
+        const localPartners = JSON.parse(localStorage.getItem('local_partner_applications') || '[]');
+        localPartners.push({
+          id: 'part-' + Date.now(),
+          company: formData.company,
+          type: formData.type,
+          country: formData.country,
+          interest: formData.interest,
+          objectives: formData.objectives,
+          email: formData.email,
+          status: 'pending',
+          orgName: formData.company,
+          orgType: formData.type,
+          domainStack: formData.interest || formData.country,
+          collabGoal: formData.objectives,
+          repName: formData.company,
+          created_at: new Date().toISOString(),
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem('local_partner_applications', JSON.stringify(localPartners));
+      } catch (lErr) {
+        console.warn("localStorage partner save failed:", lErr);
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error("Error submitting partner application:", err);

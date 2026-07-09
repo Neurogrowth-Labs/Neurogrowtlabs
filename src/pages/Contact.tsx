@@ -114,6 +114,27 @@ export default function Contact() {
         console.warn("Supabase contact submission save failed:", sErr);
       }
 
+      // 3. Fallback to localStorage list for immediate admin portal viewing
+      try {
+        const localContacts = JSON.parse(localStorage.getItem('local_contact_submissions') || '[]');
+        localContacts.push({
+          id: 'cont-' + Date.now(),
+          fullName: formData.fullName,
+          organization: formData.organization,
+          email: formData.email,
+          teamScale: formData.teamScale,
+          goal: formData.goal,
+          message: formData.message,
+          inquiryType: inquiryType,
+          status: 'unread',
+          created_at: new Date().toISOString(),
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem('local_contact_submissions', JSON.stringify(localContacts));
+      } catch (lErr) {
+        console.warn("localStorage contact save failed:", lErr);
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error("Error saving contact transmission:", err);
