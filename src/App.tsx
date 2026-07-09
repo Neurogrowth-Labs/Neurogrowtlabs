@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Landing from './pages/Landing';
@@ -25,7 +26,7 @@ import { ThemeProvider } from './components/ThemeContext';
 import TebogoChatbot from './components/ui/TebogoChatbot';
 import SEO from './components/SEO';
 
-const PageTransition = ({ children }: { children: React.ReactNode }) => {
+const PageTransition = ({ children }: { children: ReactNode }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
