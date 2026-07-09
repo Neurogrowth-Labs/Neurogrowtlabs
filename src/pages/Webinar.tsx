@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { collection, addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
+import { supabase } from '../supabase';
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 import { 
@@ -151,6 +152,22 @@ export default function Webinar() {
   React.useEffect(() => {
     const fetchDynamicWebinars = async () => {
       try {
+        // 1. Try fetching from Supabase first
+        try {
+          const { data, error } = await supabase
+            .from('webinars')
+            .select('*')
+            .order('created_at', { ascending: false });
+          if (error) throw error;
+          if (data && data.length > 0) {
+            setSessions(data);
+            return;
+          }
+        } catch (sErr) {
+          console.warn("Supabase fetch webinars failed, falling back to Firebase:", sErr);
+        }
+
+        // 2. Fallback to Firebase Firestore
         const snap = await getDocs(collection(db, 'webinars'));
         if (!snap.empty) {
           const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -163,6 +180,7 @@ export default function Webinar() {
         }
       } catch (err) {
         console.error("Error fetching dynamic webinars:", err);
+        setSessions(calendarSessions);
       }
     };
     fetchDynamicWebinars();
@@ -184,6 +202,7 @@ export default function Webinar() {
     e.preventDefault();
     if (!formData.fullName || !formData.email) return;
     
+    // 1. Dual-write to Firebase
     try {
       await addDoc(collection(db, 'webinar_registrations'), {
         ...formData,
@@ -192,7 +211,27 @@ export default function Webinar() {
         createdAt: serverTimestamp()
       });
     } catch (err) {
-      console.error("Error saving webinar registration:", err);
+      console.error("Error saving webinar registration in Firebase:", err);
+    }
+
+    // 2. Dual-write to Supabase
+    try {
+      await supabase.from('webinar_registrations').insert({
+        fullName: formData.fullName,
+        email: formData.email,
+        organization: formData.organization,
+        title: formData.title,
+        country: formData.country,
+        interestSector: formData.interestSector,
+        comments: formData.comments,
+        track: registrationTrack,
+        status: 'registered',
+        full_name: formData.fullName,
+        interest_sector: formData.interestSector,
+        created_at: new Date().toISOString()
+      });
+    } catch (err) {
+      console.error("Error saving webinar registration in Supabase:", err);
     }
     
     setSubmitted(true);

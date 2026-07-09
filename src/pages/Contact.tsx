@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
+import { supabase } from '../supabase';
 import Navbar from '../components/sections/Navbar';
 import Footer from '../components/sections/Footer';
 import { MagneticButton } from '../components/ui/MagneticButton';
@@ -80,12 +81,39 @@ export default function Contact() {
     if (!formData.fullName || !formData.email) return;
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, 'contact_submissions'), {
-        ...formData,
-        inquiryType,
-        status: 'unread',
-        createdAt: serverTimestamp()
-      });
+      // 1. Dual-write to Firebase
+      try {
+        await addDoc(collection(db, 'contact_submissions'), {
+          ...formData,
+          inquiryType,
+          status: 'unread',
+          createdAt: serverTimestamp()
+        });
+      } catch (fErr) {
+        console.warn("Firebase contact submission save failed:", fErr);
+      }
+
+      // 2. Dual-write to Supabase (supporting multiple key structures for database schema compatibility)
+      try {
+        await supabase.from('contact_submissions').insert({
+          fullName: formData.fullName,
+          fullName_custom: formData.fullName,
+          organization: formData.organization,
+          email: formData.email,
+          teamScale: formData.teamScale,
+          goal: formData.goal,
+          message: formData.message,
+          inquiryType: inquiryType,
+          status: 'unread',
+          full_name: formData.fullName,
+          team_scale: formData.teamScale,
+          inquiry_type: inquiryType,
+          created_at: new Date().toISOString()
+        });
+      } catch (sErr) {
+        console.warn("Supabase contact submission save failed:", sErr);
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error("Error saving contact transmission:", err);
