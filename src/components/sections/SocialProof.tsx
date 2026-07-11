@@ -33,25 +33,21 @@ export default function SocialProofSection() {
            </motion.div>
         </div>
 
-        <div className="lg:w-2/3 w-full relative">
-           <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-midnight-black to-transparent z-10 pointer-events-none" />
-           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-midnight-black to-transparent z-10 pointer-events-none" />
-           
-           {/* Auto-scrolling logo track */}
-           <div className="flex overflow-hidden">
-              <motion.div 
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-                className="flex gap-12 pr-12 whitespace-nowrap min-w-max items-center"
-              >
-                {/* Duplicate the array to create a seamless loop */}
-                {[...partners, ...partners].map((partner, idx) => (
-                  <div key={idx} className="flex items-center gap-3 opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                     <partner.icon className="w-8 h-8 text-quantum-silver" />
-                     <span className="text-lg font-bold text-quantum-silver tracking-tight">{partner.name}</span>
-                  </div>
-                ))}
-              </motion.div>
+        <div className="lg:w-2/3 w-full">
+           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {partners.map((partner, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex flex-col items-center gap-3 p-6 rounded-xl bg-glass-white/5 border border-glass-border hover:border-violet-glow/30 transition-all group"
+                >
+                   <partner.icon className="w-10 h-10 text-violet-glow group-hover:scale-110 transition-transform" />
+                   <span className="text-sm font-semibold text-white text-center">{partner.name}</span>
+                </motion.div>
+              ))}
            </div>
         </div>
 
