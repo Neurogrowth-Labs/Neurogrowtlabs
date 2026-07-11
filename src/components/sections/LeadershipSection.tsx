@@ -2,6 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Linkedin, Twitter, Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+// Custom GitHub icon (lucide Github is deprecated and buggy)
+const GithubIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
+
 const leadershipData = [
   {
     name: "Mr. Lusimanadio Soki Simao, MBA",
@@ -31,21 +39,25 @@ const leadershipData = [
   {
     name: "Nguyen Van Hoang",
     role: "Chief AI & ML Engineer",
-    desc: "Specialist in scalable infrastructure engineering and advanced software systems.",
+    desc: "AI engineer and full-stack architect building intelligent systems that bridge research and production.",
     image: "https://scontent-cpt1-1.xx.fbcdn.net/v/t39.30808-6/742020693_122112743169312295_2769183148926381290_n.jpg?stp=dst-jpg_tt6&cstp=mx1066x1600&ctp=s1066x1600&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=cRQB4Pm6zCMQ7kNvwEZlTWx&_nc_oc=AdqDfD4IN5Yxgd3wiCaf7BW2cX_sCrbeWLAqUaAPd6zj2-M2Zk289l4dsC_DnRMQcaI&_nc_zt=23&_nc_ht=scontent-cpt1-1.xx&_nc_gid=Kjx9xDFdlCRF5k_rmStbGQ&_nc_ss=7b2a8&oh=00_AQAYBVBr7iZqfZuGsuqAELXveyHT936dlWxBedQJdHWOBg&oe=6A549870",
-    linkedin: "#",
-    twitter: "#",
+    linkedin: "https://www.linkedin.com/in/hoangnguyen0402/",
+    twitter: "https://x.com/HoangNguyen0299",
+    github: "https://github.com/hoangnv170752",
     longBio: [
-      "Nguyễn Văn Hoàng is a highly accomplished Software Engineer with over 5 years of professional experience specializing in Artificial Intelligence, IoT, cloud computing systems, and scalable full-stack software development. He is deeply passionate about researching and implementing state-of-the-art Large Language Models (LLMs), Computer Vision systems, and complex distributed system architectures.",
-      "Throughout his career, Hoàng has focused on bridging advanced machine learning algorithms with high-performance production engineering. He excels at designing and delivering purpose-built AI-powered products that solve complex enterprise bottlenecks and generate measurable, high-impact business value, making him an outstanding technical leader in the modern digital transformation landscape."
+      "Nguyen Van Hoang is a Software Engineer with over 5 years of hands-on experience in Artificial Intelligence, IoT systems, cloud-native architecture, and full-stack development. His work centers on taking cutting-edge AI research in Large Language Models, Computer Vision, and distributed computing and shipping it as production-grade software.",
+      "Hoang's engineering philosophy is rooted in building systems that scale. From designing event-driven microservices to orchestrating containerized deployments on Kubernetes, he treats infrastructure as a first-class citizen of any AI product. His portfolio spans enterprise-grade platforms, real-time data pipelines, and embedded IoT solutions that run reliably under load.",
+      "Before joining NeuroGrowth Labs, Hoang contributed to multiple high-impact projects across Southeast Asia, including intelligent document processing systems, automated quality inspection pipelines using computer vision, and conversational AI platforms powered by LLMs. Each project reinforced his approach: solve real problems, measure the outcomes, and iterate fast.",
+      "At NeuroGrowth Labs, Hoang leads the AI and ML engineering vertical architecting model inference pipelines, integrating vector databases for semantic search, and building the tooling that enables the team to ship AI features with confidence. He is responsible for ensuring that every AI capability the company delivers is not just technically sound but also maintainable, observable, and ready for production traffic.",
+      "Outside of work, Hoang actively contributes to open-source projects, shares technical insights with the developer community, and continuously explores emerging technologies in the AI/ML space. He believes that the best engineers are perpetual learners who stay close to the craft."
     ],
     expertise: [
-      { field: "Artificial Intelligence & ML", tech: "LLMs, Computer Vision, Deep Learning, PyTorch, TensorFlow" },
-      { field: "Software Engineering & Architecture", tech: "Scalable Microservices, Event-Driven Systems, API Gateway, Design Patterns" },
-      { field: "Full-Stack Development", tech: "TypeScript, React, Node.js, Python, Java, Go, Next.js" },
-      { field: "Cloud & Infrastructure", tech: "Docker, Kubernetes, AWS, Google Cloud Platform (GCP), CI/CD Pipelines" },
-      { field: "Internet of Things (IoT)", tech: "Hardware Integration, Edge AI, MQTT, Sensor Networks, Microcontrollers" },
-      { field: "Data Systems & Databases", tech: "PostgreSQL, MongoDB, Redis, Vector Databases (Pinecone, Chroma), Data Pipeline Orchestration" }
+      { field: "Artificial Intelligence & ML", tech: "LLMs, RAG Systems, Computer Vision, Deep Learning, PyTorch, TensorFlow, Hugging Face" },
+      { field: "Software Architecture", tech: "Microservices, Event-Driven Design, Domain-Driven Design, API Gateway, System Design" },
+      { field: "Full-Stack Engineering", tech: "TypeScript, React, Next.js, Node.js, Python, FastAPI, Go" },
+      { field: "Cloud & DevOps", tech: "Docker, Kubernetes, AWS, GCP, Terraform, CI/CD, GitOps" },
+      { field: "IoT & Edge Computing", tech: "Embedded Systems, Edge AI, MQTT, Sensor Networks, Raspberry Pi, ESP32" },
+      { field: "Data Engineering", tech: "PostgreSQL, MongoDB, Redis, Pinecone, Kafka, Apache Spark, Data Pipelines" }
     ]
   },
   {
@@ -135,10 +147,8 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    mouseX.set(x);
-    mouseY.set(y);
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
   const handleMouseLeave = () => {
@@ -146,164 +156,173 @@ const LeadershipCard = ({ member, isExpanded, onExpand, onClose }: any) => {
     mouseY.set(0);
   };
 
+  // EXPANDED MODAL VIEW
+  if (isExpanded) {
+    return (
+      <motion.div
+        layout
+        className="w-[90vw] md:w-[550px] lg:w-[600px] h-[80vh] rounded-2xl bg-midnight-black border border-glass-border overflow-hidden flex flex-col"
+      >
+        {/* Header */}
+        <div className="flex-shrink-0 bg-midnight-black border-b border-glass-border p-5">
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex items-center gap-4">
+              {member.image && (
+                <img src={member.image} alt={member.name} className="w-14 h-14 rounded-full object-cover border-2 border-ai-cyan/30" referrerPolicy="no-referrer" />
+              )}
+              <div>
+                <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                <p className="text-ai-cyan font-mono text-xs uppercase tracking-wider">{member.role}</p>
+              </div>
+            </div>
+            <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-red-400 hover:border-red-400 transition-all flex-shrink-0">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-5">
+          {member.longBio && (
+            <div className="space-y-3">
+              {member.longBio.map((para: string, idx: number) => (
+                <p key={idx} className="text-quantum-silver text-sm leading-relaxed">{para}</p>
+              ))}
+            </div>
+          )}
+
+          {member.keyPillars && (
+            <div className="pt-4 border-t border-glass-border">
+              <h4 className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-3">Core Pillars</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {member.keyPillars.map((pillar: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg bg-white/5 border border-glass-border">
+                    <div className="font-medium text-white text-sm mb-1">{pillar.title}</div>
+                    <div className="text-quantum-silver text-xs">{pillar.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {member.expertise && (
+            <div className="pt-4 border-t border-glass-border">
+              <h4 className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-3">Expertise</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {member.expertise.map((exp: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg bg-white/5 border border-glass-border">
+                    <div className="font-medium text-white text-sm mb-1">{exp.field}</div>
+                    <div className="text-quantum-silver text-xs">{exp.tech}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {member.honors && (
+            <div className="pt-4 border-t border-glass-border">
+              <h4 className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-3">Honors</h4>
+              <div className="p-3 rounded-lg bg-ai-cyan/10 border border-ai-cyan/20">
+                <p className="text-white text-sm">{member.honors}</p>
+              </div>
+            </div>
+          )}
+
+          {member.credentials && (
+            <div className="pt-4 border-t border-glass-border">
+              <h4 className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-3">Credentials</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {member.credentials.map((cred: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg bg-white/5 border border-glass-border">
+                    <div className="font-medium text-white text-sm mb-1">{cred.title}</div>
+                    <div className="text-quantum-silver text-xs">{cred.issuer}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="flex-shrink-0 bg-midnight-black border-t border-glass-border p-4">
+          <div className="flex gap-3">
+            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-blue-500 transition-all">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-gray-300 transition-all">
+              <Twitter className="w-4 h-4" />
+            </a>
+            {member.github && (
+              <a href={member.github} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-purple-500 transition-all">
+                <GithubIcon className="w-4 h-4" />
+              </a>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // COLLAPSED CARD VIEW
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       layout
-      whileHover={{ scale: isExpanded ? 1 : 1.02 }}
-      onClick={!isExpanded ? onExpand : undefined}
-      className={`relative p-8 rounded-2xl bg-midnight-black/60 border border-glass-border overflow-hidden group transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)] ${isExpanded ? 'h-auto max-h-[85vh] overflow-y-auto w-full md:w-[46rem] max-w-2xl scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent' : 'h-[340px] max-w-[340px] shrink-0 cursor-pointer'}`}
+      whileHover={{ scale: 1.02 }}
+      onClick={onExpand}
+      className="relative p-8 h-[340px] max-w-[340px] shrink-0 cursor-pointer rounded-2xl bg-midnight-black/60 border border-glass-border overflow-hidden group transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)]"
     >
-      {/* Background Image Layer */}
-      {member.image ? (
+      {member.image && (
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-2xl">
-          <img 
-            src={member.image} 
-            alt={member.name} 
-            className={`w-full h-full object-cover transition-transform duration-700 ${isExpanded ? 'scale-100 opacity-45' : 'opacity-75 group-hover:opacity-90 group-hover:scale-105'}`} 
-            referrerPolicy="no-referrer"
-          />
-          {/* Multi-layered gradient overlay to guarantee readability of white text */}
+          <img src={member.image} alt={member.name} className="w-full h-full object-cover opacity-75 group-hover:opacity-90 group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
           <div className="absolute inset-0 bg-gradient-to-t from-midnight-black via-midnight-black/60 to-transparent" />
-          {isExpanded && (
-            <div className="absolute inset-0 bg-midnight-black/40 backdrop-blur-[1px]" />
-          )}
         </div>
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-electric-blue/5 to-transparent transition-opacity pointer-events-none" />
       )}
 
-      {/* Dynamic Background Radial Hover Glow */}
-      {!isExpanded && (
-        <motion.div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1"
-          style={{
-            background: useTransform(
-              [mouseX, mouseY],
-              ([x, y]) => `radial-gradient(circle at ${x}px ${y}px, rgba(0, 229, 255, 0.15) 0%, transparent 60%)`
-            ),
-          }}
-        />
-      )}
+      <motion.div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-1"
+        style={{
+          background: useTransform([mouseX, mouseY], ([x, y]) => `radial-gradient(circle at ${x}px ${y}px, rgba(0, 229, 255, 0.15) 0%, transparent 60%)`),
+        }}
+      />
 
-      {/* Content */}
-      <motion.div layout className="relative z-10 h-full flex flex-col justify-between" style={{ minHeight: isExpanded ? 'auto' : '100%' }}>
-        {/* Top Control Bar */}
+      <div className="relative z-10 h-full flex flex-col justify-between">
         <div className="flex justify-end">
-          {!isExpanded ? (
-            <button
-              onClick={(e) => { e.stopPropagation(); onExpand(); }}
-              className="w-10 h-10 rounded-full bg-midnight-black/60 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-ai-cyan hover:bg-ai-cyan/10 transition-all opacity-0 group-hover:opacity-100 shadow-lg backdrop-blur-sm"
-            >
-              <Maximize2 className="w-4 h-4" />
-            </button>
-          ) : (
-            <button
-              onClick={(e) => { e.stopPropagation(); onClose(); }}
-              className="w-10 h-10 rounded-full bg-midnight-black/60 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-red-400 hover:border-red-400 hover:bg-red-400/10 transition-all shadow-lg backdrop-blur-sm"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+          <button
+            onClick={(e) => { e.stopPropagation(); onExpand(); }}
+            className="w-10 h-10 rounded-full bg-midnight-black/60 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-ai-cyan transition-all opacity-0 group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+          >
+            <Maximize2 className="w-4 h-4" />
+          </button>
         </div>
 
-        {/* Profile Info, Bio, and Social Links */}
-        <div className={isExpanded ? "mt-4" : "mt-auto"}>
-          <motion.h3 layout className={`${isExpanded ? 'text-2xl mb-1' : 'text-xl mb-1'} font-bold text-white`}>{member.name}</motion.h3>
-          <motion.p layout className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-4">{member.role}</motion.p>
-          
+        <div className="mt-auto">
+          <h3 className="text-xl mb-1 font-bold text-white">{member.name}</h3>
+          <p className="text-ai-cyan font-mono text-xs uppercase tracking-wider mb-4">{member.role}</p>
+
           <AnimatePresence>
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className={isExpanded ? "block" : "hidden group-hover:block transition-all duration-300"}
-            >
-              {!isExpanded && (
-                <p className="text-quantum-silver text-sm leading-relaxed mb-4">{member.desc}</p>
-              )}
-              {isExpanded && (
-                <div className="text-sm text-quantum-silver leading-relaxed mb-6 space-y-4">
-                  {member.longBio ? (
-                    <>
-                      <div className="space-y-4 pr-1">
-                        {member.longBio.map((para: string, idx: number) => (
-                          <p key={idx} className="text-quantum-silver leading-relaxed">{para}</p>
-                        ))}
-                      </div>
-                      {member.keyPillars && (
-                        <div className="mt-8 pt-6 border-t border-glass-border">
-                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Core Pillars</h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {member.keyPillars.map((pillar: any, idx: number) => (
-                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
-                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{pillar.title}</div>
-                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{pillar.description}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {member.expertise && (
-                        <div className="mt-8 pt-6 border-t border-glass-border">
-                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan">Strategic Expertise Fields</h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {member.expertise.map((exp: any, idx: number) => (
-                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
-                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{exp.field}</div>
-                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{exp.tech}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {member.honors && (
-                        <div className="mt-8 pt-6 border-t border-glass-border">
-                          <h4 className="text-sm font-bold text-white mb-3 tracking-wider uppercase font-mono text-ai-cyan">Distinguished Honors</h4>
-                          <div className="p-4 rounded-xl bg-ai-cyan/5 border border-ai-cyan/20">
-                            <p className="text-white text-sm font-semibold">{member.honors}</p>
-                          </div>
-                        </div>
-                      )}
-                      {member.credentials && (
-                        <div className="mt-8 pt-6 border-t border-glass-border">
-                          <h4 className="text-sm font-bold text-white mb-4 tracking-wider uppercase font-mono text-ai-cyan font-semibold">Credentials & Compliance</h4>
-                          <div className="text-xs text-quantum-silver mb-3 uppercase tracking-wider font-mono">Verified Executive Frameworks</div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {member.credentials.map((cred: any, idx: number) => (
-                              <div key={idx} className="p-3 rounded-xl bg-midnight-black/40 border border-glass-border hover:border-electric-blue/40 hover:bg-electric-blue/5 transition-all duration-300 group/item">
-                                <div className="font-semibold text-white text-xs uppercase tracking-wide mb-1 group-hover/item:text-electric-blue transition-colors">{cred.title}</div>
-                                <div className="text-quantum-silver text-xs font-light leading-relaxed">{cred.issuer}</div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <p>{member.desc}</p>
-                      <p className="mt-4 pt-4 border-t border-glass-border">Background: An established leader shaping the next generation of AI ecosystems and African digital transformation. Focuses on scalable engineering, enterprise design, and deep technology integration.</p>
-                    </>
-                  )}
-                </div>
-              )}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="hidden group-hover:block">
+              <p className="text-quantum-silver text-sm leading-relaxed mb-4">{member.desc}</p>
             </motion.div>
           </AnimatePresence>
 
-          <motion.div layout className={`flex gap-4 pt-4 border-t border-glass-border ${isExpanded ? 'opacity-100 mt-6' : 'opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2'}`}>
-            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all">
-               <Linkedin className="w-4 h-4" />
+          <div className="flex gap-4 pt-4 border-t border-glass-border opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-blue-500 transition-all">
+              <Linkedin className="w-4 h-4" />
             </a>
-            <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-gray-300 hover:bg-white/10 transition-all">
-               <Twitter className="w-4 h-4" />
+            <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-gray-300 transition-all">
+              <Twitter className="w-4 h-4" />
             </a>
-          </motion.div>
+            {member.github && (
+              <a href={member.github} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-glass-border flex items-center justify-center text-quantum-silver hover:text-white hover:border-purple-500 transition-all">
+                <GithubIcon className="w-4 h-4" />
+              </a>
+            )}
+          </div>
         </div>
-      </motion.div>
-
+      </div>
     </motion.div>
   );
 };
@@ -368,7 +387,7 @@ export default function LeadershipSection() {
                    animate={{ opacity: 1 }}
                    exit={{ opacity: 0 }}
                    onClick={() => setExpandedIndex(null)}
-                   className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-4"
+                   className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9999] flex items-start justify-center pt-20 pb-8 overflow-y-auto"
                 >
                    <div onClick={e => e.stopPropagation()}>
                      <LeadershipCard 
