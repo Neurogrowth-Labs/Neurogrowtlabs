@@ -3,4 +3,8 @@
   "outputDirectory": "dist",
   "installCommand": "pnpm install",
   "framework": "vite"
+
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
